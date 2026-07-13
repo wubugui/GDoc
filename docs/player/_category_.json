@@ -1,0 +1,9 @@
+{
+  "label": "玩家手册",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "slug": "/player",
+    "description": "面向玩家的玩法操作与剧情导览手册。"
+  }
+}
