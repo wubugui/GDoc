@@ -1,15 +1,17 @@
 import React from 'react';
+import Link from '@docusaurus/Link';
 import toolData from '@site/src/data/tools.json';
 
-// 单一数据源:所有工具事实来自 src/data/tools.json。
-// 表格、计数、图例全部由它渲染 —— 加/删工具只改那一个 JSON,
-// 全站数字(总数、分组数)自动同步,不再散落硬编码。
-
 const README_META = {
-  green: {emoji: '🟢', label: '详细'},
+  green: {emoji: '🟢', label: '有手册'},
   yellow: {emoji: '🟡', label: '部分'},
-  red: {emoji: '🔴', label: '无'},
+  red: {emoji: '🔴', label: '待补'},
 };
+
+/** 展示用中文名：优先 alias，否则 name。 */
+function displayName(tool) {
+  return tool.alias || tool.name;
+}
 
 /** 工具总数(所有分组去重后的条目数)。 */
 export function toolCount() {
@@ -31,6 +33,18 @@ function ReadmeCell({status, note}) {
   );
 }
 
+function ToolNameCell({tool}) {
+  const label = displayName(tool);
+  if (tool.doc) {
+    return (
+      <Link to={`/docs/editors/${tool.doc}`}>
+        <strong>{label}</strong>
+      </Link>
+    );
+  }
+  return <strong>{label}</strong>;
+}
+
 function GroupTable({group}) {
   return (
     <>
@@ -40,16 +54,15 @@ function GroupTable({group}) {
           <tr>
             <th>工具</th>
             <th>形态</th>
-            <th>启动</th>
-            <th>文档状态</th>
+            <th>怎么开</th>
+            <th>文档</th>
           </tr>
         </thead>
         <tbody>
           {group.tools.map((t) => (
             <tr key={t.name}>
               <td>
-                <strong>{t.name}</strong>
-                {t.alias ? <span style={{opacity: 0.7}}> {t.alias}</span> : null}
+                <ToolNameCell tool={t} />
               </td>
               <td>{t.form}</td>
               <td>
@@ -77,12 +90,12 @@ export default function ToolMatrix() {
   );
 }
 
-/** 按文档状态统计:🟢/🟡/🔴 各多少个,并列出工具名。 */
+/** 按文档状态统计。 */
 export function ReadmeStats() {
   const buckets = {green: [], yellow: [], red: []};
   for (const g of toolData.groups) {
     for (const t of g.tools) {
-      (buckets[t.readme] || buckets.red).push(t.name);
+      (buckets[t.readme] || buckets.red).push(displayName(t));
     }
   }
   const row = (status) => {
@@ -90,7 +103,7 @@ export function ReadmeStats() {
     const names = buckets[status];
     return (
       <li key={status}>
-        {meta.emoji} <strong>{meta.label}文档</strong>({names.length} 个):
+        {meta.emoji} <strong>{meta.label}</strong>({names.length} 个):
         {names.join('、')}
       </li>
     );

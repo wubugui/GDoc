@@ -1,44 +1,113 @@
 ---
 id: chronicle-sim-v3
-title: chronicle_sim_v3 编年史模拟器 v3
+title: 编年史 v3
 sidebar_position: 2
 slug: /editors/sim-domain/chronicle-sim-v3
+description: 图驱动的编年史推演 CLI——用节点图描述规则，命令行跑模拟（偏实验/管线）。
 ---
 
-# chronicle_sim_v3 编年史模拟器 v3
+# 编年史 v3
 
-图驱动的编年史模拟器(CLI,程序名 `csim`)。
+**编年史 v3** 用 **节点图** 描述世界规则与事件链，在 **命令行** 里跑推演——适合已把逻辑画成图、要 **批量、可脚本化** 跑模拟的场景。没有 v2 那种大 GUI，主打 **图 + CLI**。
 
-| 属性 | 值 |
-|---|---|
-| 模块 | `tools.chronicle_sim_v3` |
-| 形态 | 命令行 CLI(typer) |
-| 启动 | `./dev.sh chronicle-sim` |
-| 文档状态 | 🔴 无 README(有 typer help) |
-
-:::caution
-task 名 `chronicle-sim`(不带版本号)指向的是 **v3**,不是 v2。要跑 v2 请用 `chronicle-sim-v2`。
+:::caution[任务名易混]
+`./dev.sh chronicle-sim` 打开的是 **v3**（不带版本号）。要 **v2 桌面 GUI** 请用 `./dev.sh chronicle-sim-v2`。
 :::
 
-## 用途
+---
 
-以图为核心驱动编年史推演,通过 typer CLI(程序名 `csim`)运行。
+## 干什么
 
-## 启动
+- 用 **图节点**（多种类型，以工具内帮助为准）表达编年史规则、触发、分支。
+- **命令行** 加载图，按设定步进或跑完一轮，输出日志与状态快照。
+- 适合 CI、批处理、与外部工具链对接。
+- **不**直接改主编辑器里的任务/叙事数据——结果需人工或脚本迁移。
+
+---
+
+## 怎么开
+
+**方式一：dev 脚本**
 
 ```bash
-./dev.sh chronicle-sim   # 注意:task 名映射到 v3
-# 也可:
-python -m tools.chronicle_sim_v3
+./dev.sh chronicle-sim
 ```
 
-## 关键事实
+进入 v3 命令行界面（具体子命令以终端 `--help` 为准）。
 
-- 🔴 无 README,仅有 typer help:"ChronicleSim v3 — 图驱动的编年史模拟器(CLI)"。
-- 入口 `tools/chronicle_sim_v3/cli/main.py`(`app = typer.Typer(name="csim", ...)`)。
-- 有 18 类节点需从代码提炼,手册待补。
+**方式二：Web 控制台**
+
+若控制台有 **编年史模拟** 且标注 v3 / CLI，点之效果等同上。
+
+---
+
+## 一步步怎么用
+
+1. 准备 **推演图** 文件（或从模板复制雾津实验图）。
+2. 终端 `./dev.sh chronicle-sim`，查看可用子命令（运行、验证、导出等）。
+3. 指定图路径与运行参数，执行一轮模拟。
+4. 读终端输出与生成目录里的 **状态 / 事件日志**。
+5. 与预期对照；改图后重跑。
+6. 值得保留的设定 **摘回** 主编辑器或文档，图文件归档在版本库。
+
+---
+
+## 何时用
+
+| 情况 | 建议 |
+|---|---|
+| 规则已画成图，要无人值守跑 | v3 CLI |
+| 要桌面点按钮、看 Agent 写作文 | [编年史 v2](./chronicle-sim-v2) |
+| 正式改玩家玩的寻狗记 | 主编辑器 |
+| 不熟悉图节点语义 | 先问项目维护者，别盲改图 |
+
+---
+
+## 当心什么
+
+| 当心 | 说明 |
+|---|---|
+| v2 / v3 命令混用 | 见页首 caution |
+| 图节点类型多 | 改错边整个推演偏了，先小图试跑 |
+| 产出当定稿 | 沙盒结果须策划审核 |
+| 无 GUI 改图 | 图可能在专编辑器或数据文件里改，流程问团队 |
+
+---
+
+## 工作流
+
+```mermaid
+flowchart LR
+  GRAPH[推演图]
+  V3[编年史 v3 CLI]
+  GRAPH --> V3
+  V3 --> LOG[日志 / 状态快照]
+  LOG --> REV[人工审核]
+  REV --> ED[主编辑器 或 文档]
+```
+
+---
+
+## 雾津例子
+
+1. 图里用节点表达「每周有概率触发码头失踪案传闻」。
+2. `./dev.sh chronicle-sim` 跑 12 周，统计传闻触发次数是否在预期区间。
+3. 触发过高则改条件节点阈值，重跑对比。
+4. 最终采用的周事件表写成设计 doc，主编辑器 **规则** / **任务** 按定稿实现。
+
+---
+
+## 和相关工具怎么配合
+
+| 工具 | 关系 |
+|---|---|
+| [编年史 v2](./chronicle-sim-v2) | GUI + Agent 写作文路线 |
+| [规则面板](../panels/rule) | 游戏里正式规则仍在此维护 |
+| [主编辑器](../main-editor/overview) | 玩家内容落点 |
+
+---
 
 ## 相关
 
-- [chronicle_sim_v2 编年史模拟器 v2](./chronicle-sim-v2)
-- [工具速查表](../tool-matrix)
+- [编年史 v2](./chronicle-sim-v2)
+- [工具打开方式](../launch-architecture)

@@ -1,0 +1,36 @@
+name: Build
+
+# 在 PR 与推送到 main 时构建文档站。
+# 设 CI=1 后 docusaurus.config.js 会把断裂链接/锚点从"警告"升级为"抛错",
+# 于是死链、断裂的 markdown 链接、MDX 语法错误会在合并前被拦下。
+# (Cloudflare Pages 自身也会构建部署;这里是合并前的早期防线。)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# 同一分支的旧运行在有新提交时取消,省 CI 时间。
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (strict — broken links fail the build)
+        run: npm run build
+        env:
+          CI: '1'

@@ -1,177 +1,126 @@
 ---
 id: dev-godot-port
 title: Godot 移植工作流
-sidebar_position: 3
+sidebar_position: 4
 slug: /dev/godot-port
-description: 双壳 parity 对齐、视觉 SSIM 门禁、原生导出。
+description: 双壳 parity 对齐、日常怎么跑、怎么验证、怎么导出——操作向。
 ---
 
 # Godot 移植工作流
 
-GameDraft 的 Godot 移植壳（`godot_port/`，Godot 4 + GDScript）负责把 TypeScript/Pixi 权威源逐项复刻，并与权威源做 **parity（行为一致性）对齐**。
+GameDraft 除浏览器里的权威源版本外，还有 **Godot 移植壳**，用于 macOS / Windows **原生导出**。移植不是重写内容，而是**同一套数据、同一套行为**，在 Godot 里跑通并过门禁。
 
 ---
 
-## 核心原则
+## 你要记住的三条
 
-Godot 壳与 TypeScript 权威源**读取同一套 JSON 和媒体数据**，**禁止维护第二份内容数据**。内容（对白、场景、任务、物品……）只在权威源侧编辑一次，两壳共用。
-
-parity 不是"看起来差不多"——表现层用 **SSIM 门禁**做无损截图比对，逻辑/数据层用**契约审计**做逐字段、逐能力核对。
-
-:::warning
-改动权威源后，**重跑 parity 审计验证两壳一致**，再认定移植完成。
-:::
+1. **内容只编一份**——对白、场景、任务、媒体两壳共用；禁止给 Godot 单独拷一份 JSON。
+2. **权威源先改、移植后对齐**——新玩法先在 TS 版验证，再迁 Godot、跑 parity。
+3. **对齐有两层**——逻辑/数据要一致；画面用视觉门禁（截图 SSIM）卡阈值。
 
 ---
 
-## 当前 parity 状态
+## 日常：怎么跑 Godot
 
-### 逻辑 / 数据强 parity（0 字段差异）
+### 打开工程
 
-| 维度 | 状态 |
+- 用 Godot 4 **导入**游戏仓库里的 Godot 工程目录（项目根在仓库的 Godot 移植子树内）。
+- 或在终端用本机 Godot 可执行文件加 `--editor --path <工程目录>` 打开编辑器。
+
+### 编辑器里
+
+| 操作 | 作用 |
 |---|---|
-| 逻辑 / 事件 / 存档 / 固定时钟 | **0 字段差异** |
+| **F5** | 运行整个项目 |
+| **F6** | 运行当前场景 |
 
-### 登记能力 strict coverage（0 missing）
+### 游戏内操作（与玩家手册一致）
 
-| 能力 | 覆盖 |
-|---|---|
-| Action | 101 / 101 |
-| Condition | 9 / 9 |
-| 图对话节点 | 7 / 7 |
-| Cutscene present | 16 / 16 |
-
-### 测试覆盖
-
-| 维度 | 数量 |
-|---|---|
-| 过场 | 20 个测试 |
-| 场景 | 27 个测试 |
-| 动画 manifest | 36 个测试 |
-| 小游戏 | 四类 |
-| 场景真实玩家路径 | 22 条 |
-| 双向真实存档往返 | 均有测试 |
-
-### 资源与导出
-
-- **747 个共享文件**按 hash 重建导出镜像。
-- **macOS universal 包**已真实启动。
-- **Windows x86_64 包**已完成校验。
-
----
-
-## 如何运行 Godot
-
-### 编辑器
-
-任选其一：
-
-```bash
-# 命令行直接打开编辑器
-/Applications/Godot.app/Contents/MacOS/Godot --editor --path godot_port
-```
-
-或在 Godot Project Manager 中导入 `godot_port/project.godot`，然后：
-
-- **F5** 运行整个项目
-- **F6** 运行当前场景
-
-### 游戏内操作
-
-| 按键 | 动作 |
+| 按键 | 作用 |
 |---|---|
 | WASD / 方向键 | 移动 |
 | Shift | 奔跑 |
 | E / 空格 | 互动 |
-| F5 | 快速保存 |
-| F6 | 快速读取 |
+| F5 / F6 | 快速存读档 |
 
-### 无界面回归
+用于肉眼冒烟；**是否算对齐**以 parity 报告与测试为准，不以「我看着像」为准。
 
-```bash
-python3 godot_port/tools/run_tests.py
-npm run test:godot-visual-parity   # 视觉 parity 全量门禁
+---
+
+## 日常：怎么验证对齐
+
+改完权威源或移植逻辑后，按顺序做：
+
+```mermaid
+flowchart TD
+  A[改共享数据或权威逻辑] --> B[TS 版冒烟 npm test / 进游戏玩]
+  B --> C[Godot 跑无界面回归]
+  C --> D[视觉 parity 门禁]
+  D --> E{过阈值?}
+  E -->|是| F[可提 PR / 打导出包]
+  E -->|否| G[查差异报告 · 修移植或契约]
 ```
 
----
+| 步骤 | 命令 / 动作 | 目的 |
+|---|---|---|
+| TS 单测 | `npm test` | 权威逻辑没回归 |
+| Godot 回归 | 仓库提供的 Python 测试运行器（见 Godot 工具目录说明） | 场景、存档、过场、小游戏等 |
+| 视觉全量 | `npm run test:godot-visual-parity` | 截图 SSIM 对阈值 |
+| 分域扫描 | `test:godot-scene-visuals` 等 | 改了一类内容时局部跑 |
 
-## parity 工具链
+**逻辑/数据 parity** 看契约审计与差异报告（零字段差异为目标）。**视觉 parity** 看场景装载、fade 关键帧、对话推进态、小游戏运行态等分组门禁。
 
-工具位于 `godot_port/tools/`。
-
-### 审计脚本（Python）
-
-| 脚本 | 说明 |
-|---|---|
-| `audit_architecture_parity.py` | 架构 parity 审计 |
-| `audit_runtime_coverage.py` | 运行时覆盖审计 |
-| `audit_dialogue_graphs.py` | 对话图审计 |
-| `audit_scene_routes.py` | 场景路由审计 |
-| `audit_content_warnings.py` | 内容警告审计 |
-| `audit_temporary_bypasses.py` | 临时旁路审计 |
-| `build_runtime_contracts.py` | 构建运行时契约 |
-| `build_resource_graph.py` | 构建资源图 |
-| `build_exports.py` | 构建导出 |
-| `parity_runner.py` | parity 运行器 |
-| `run_tests.py` | 测试运行器 |
-
-### 视觉 parity 扫描（Node mjs）
-
-| 脚本 | 说明 |
-|---|---|
-| `visual_parity_runner.mjs` | 视觉 parity 总运行器（带 `--require-thresholds`） |
-| `visual_scene_sweep.mjs` | 场景静态扫描 |
-| `visual_fade_sweep.mjs` | fade 关键帧扫描 |
-| `visual_dialogue_sweep.mjs` | 对话推进态扫描 |
-| `visual_minigame_sweep.mjs` | 小游戏运行态扫描 |
+改动权威源后**必须重跑**相关门禁，再认定移植完成。
 
 ---
 
-## parity 产物
+## parity 产物与报告（工作流视角）
 
-产物位于 `godot_port/compatibility/`。
+仓库内保留**契约**与**最近一次 parity 报告**（对齐登记、能力覆盖、快照差异）。协作者不用背文件名，只需知道：
 
-| 文件 | 说明 |
+| 看什么 | 何时看 |
 |---|---|
-| `architecture-contract.json` | 架构契约 |
-| `authoritative-contract.json` | 权威源契约 |
-| `capabilities.json` | 能力登记 |
-| `code-translation-contract.json` | 代码翻译契约 |
-| `runtime-command-contract.json` | 运行时命令契约 |
-| `runtime-snapshot-schema.json` | 运行时快照 schema |
-| `scene-field-contract.json` | 场景字段契约 |
-| `data-catalog-ownership.json` | 数据目录归属 |
-| `content-warning-classification.json` | 内容警告分类 |
-| `dialogue-graph-audit.json` | 对话图审计结果 |
-| `parity-last-report.json` | 最近一次 parity 报告（约 274KB，含 snapshots / differences / equivalent） |
+| 能力覆盖表 | 新加 Action/Condition/对话节点后，是否登记全 |
+| 差异报告 | 门禁失败时，差在数据字段还是画面 |
+| 导出镜像 hash | 打包包前确认媒体与权威源一致 |
+
+报告由工具链自动生成；修的是**行为和数据**，不是手改报告 JSON。
 
 ---
 
-## 视觉 SSIM 门禁
+## 视觉门禁在卡什么
 
-表现层的 parity 由 **SSIM（结构相似性）门禁**保障，而非肉眼比对。每个场景/状态对两壳各产一张无损截图，计算 SSIM 并对照阈值判定通过。
-
-| 门禁 | 内容 |
+| 分组 | 内容 |
 |---|---|
-| 场景静态装载态 | 27 个场景 |
-| `fadeWorldFromBlack` | 五个 alpha 关键帧 |
-| 对话推进态 | 6 组真实推进 |
-| 小游戏运行态 | 四类小游戏 |
+| 场景静态 | 各场景装载态截图对比 |
+| 过场 fade | 黑场渐显关键帧 |
+| 对话推进 | 多组真实推进态 |
+| 小游戏 | 糖画、扎纸、水域等运行态 |
+
+SSIM 低于阈值即失败——通常去查渲染顺序、字体、滤镜、坐标，而不是调低阈值糊弄。
 
 ---
 
 ## 原生导出
 
-| 平台 | 包 | 状态 |
-|---|---|---|
-| macOS | universal | 已真实启动 |
-| Windows | x86_64 | 已完成校验 |
+| 平台 | 状态（随项目推进更新） |
+|---|---|
+| macOS universal | 已能真实启动验证 |
+| Windows x86_64 | 已做校验 |
 
-导出镜像由 747 个共享文件按 hash 重建，确保两壳使用的媒体完全一致。
+导出前：**共享媒体 hash 一致**、parity 门禁过、无临时旁路未登记。导出脚本由仓库工具提供，在 [常用工作流命令](./commands) 与移植工具说明里调用。
+
+---
+
+## 与资源管线、编辑的关系
+
+- 策划在编辑器改 JSON/媒体 → `./dev.sh pull` 后两壳同时读到。
+- 大文件走 [资源管线](./asset-pipeline)；导出镜像按 hash 重建，避免 Godot 包缺图。
 
 ---
 
 ## 接下来
 
-- [项目架构总览](./architecture) —— 双壳结构与 parity 契约定位
-- [命令清单](./commands) —— `test:godot-visual-parity` 等测试命令速查
+- [项目总览](./overview)
+- [常用工作流命令](./commands)
+- [参与与提交流程](./contributing)

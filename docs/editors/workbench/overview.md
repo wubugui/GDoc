@@ -1,47 +1,125 @@
 ---
 id: workbench-overview
 title: 生产工作台总览
-sidebar_position: 1
+sidebar_position: 0
 slug: /editors/workbench/overview
+description: 检查、追踪、验收、调试与素材生产——雾津内容编纂的质检台，不改游戏正文。
 ---
 
 # 生产工作台总览
 
-生产工作台（`./dev.sh workbench`）是 GameDraft 的**生产管理/质检/素材任务**控制台——它**不编辑游戏内容**，而是辅助内容生产流程：剧情单元追踪与自动验收、每日检查、Graph 诊断、运行时 Debug、素材审计/候选/任务、图片工具、动画 Sheet、Codex/GPT 探针。
+你在雾津编册子，**主编辑器**是执笔的书案；**生产工作台**是旁边的验货台——它不替你改对白、改场景、改任务，只帮你**查有没有漏、追做到哪了、跑一遍能不能过、素材齐不齐**。
 
-它是一个 PySide6 桌面应用，含 **10 个 Tab**，每个 Tab 有独立 console dock。
-
-## 启动
+启动：
 
 ```bash
 ./dev.sh workbench
-# 等价:python -m tools.production_workbench [project_root]
 ```
+
+---
+
+## 能干什么
+
+| 能力 | 说明 |
+|---|---|
+| **剧情单元追踪与验收** | 把一块剧情包成可追踪的工作包，自动生成验收路线、发到游戏里跑、记录过没过 |
+| **每日检查** | 开工前一键跑例行体检，error 和 blocker 必须先修 |
+| **Graph 诊断** | 看信号流、旗标读写、任务依赖、对白路由、状态风险 |
+| **运行时调试** | 游戏跑着时抓快照、看 trace、复现事故 |
+| **素材生产链** | 审计引用、下发 AI 任务、收候选、抠图拼动画 |
+
+你日常改内容仍在 **[主编辑器](../main-editor/overview)**；到这里来，是为了**检查、验收、Debug 和出素材**。
+
+---
 
 ## 与主编辑器的分工
 
-主编辑器做**内容**，工作台做**流程/验收/素材任务**。两者并列、互补。工作台复用主编辑器的 `ProjectModel` 做**只读**数据访问——它读游戏数据来诊断/验收，但不直接写内容。
+```mermaid
+flowchart LR
+    subgraph edit [主编辑器]
+        A[改场景 / 对白 / 任务 / 素材引用]
+    end
+    subgraph wb [生产工作台]
+        B[查 Graph / 跑验收 / 抓运行时 / 出素材]
+    end
+    A -->|保存内容| DATA[(工程数据)]
+    DATA -->|只读诊断| B
+    B -->|报告告诉你改哪| A
+```
 
-## 10 个 Tab
+| 谁 | 干什么 | 什么时候开 |
+|---|---|---|
+| **主编辑器** | 编纂游戏内容 | 要写、要改、要预览 |
+| **生产工作台** | 检查、追踪、验收、Debug、素材任务 | 开工体检、一块剧情要过验收、查 Graph 问题、跑素材管线 |
 
-权威源：`tools/production_workbench/workbench_window.py`（`addTab` 顺序即左→右）。
-
-| # | Tab | 用途 | 底层 |
-|---|---|---|---|
-| 1 | **剧情单元** StoryUnit | 剧情单元编排 + 自动验收（生成验收脚本 → 发送到游戏运行 → 对比快照） | `story_units.py` / `story_acceptance.py` |
-| 2 | **每日检查** DailyCheck | 每日例行检查 | `daily_check.py` |
-| 3 | **Graph 诊断** | 图诊断，子 Tab：Overview / Compositions / Flow / ReadWrite（Flag/Action/State 写入）/ Routes / Warnings / Runtime | `graph_diagnostics.py` |
-| 4 | **运行时 Debug** | 运行时调试，子 Tab：Overview / State（Narrative/Flags/Quests/Scenarios）/ Trace（Trace/Transitions/Issues）/ Commands | `runtime_debug.py` / `runtime_command.py` |
-| 5 | **素材审计** AssetAudit | 素材引用审计（哪些素材被引用、哪些缺失/冗余） | `asset_audit.py` |
-| 6 | **素材候选** AssetCandidate | 素材候选管理 | `asset_candidates.py` |
-| 7 | **图片工具** ImageTools | 图片处理工具 | `image_tools.py` |
-| 8 | **动画 Sheet** AnimationSheet | 动画 sheet 拼合/拆分 | `animation_sheet.py` |
-| 9 | **素材任务** AssetTask | 素材任务管理（生成 Codex prompt） | `asset_tasks.py` |
-| 10 | **Codex/GPT 探针** CodexProbe | Codex/GPT 探针 | `codex_probe.py` / `codex_asset_runner.py` |
-
-:::note[剧情单元验收三步流程]
-"剧情单元"是工作台的主打能力：**① 生成验收脚本 → ② 发送到正在运行的游戏 → ③ 对比运行前后快照**，自动判定该剧情单元是否达标。逐步操作文档将在后续阶段补充。
+:::tip[记住这句]
+**改东西去主编辑器；查过没过、齐不齐来工作台。**
 :::
+
+后台任务还在跑时（按钮显示「运行中 / 加载中」），工作台会拦住你切换工程或关窗口——先等它结束。
+
+---
+
+## 界面怎么逛
+
+窗口顶部是一排 **10 个 Tab**，从左到右依次是剧情单元、每日检查、Graph 诊断、运行时调试、素材审计、素材候选、图片工具、动画拼合、素材任务、AI 素材探针。每个 Tab 下方还有独立的日志区，方便你看本次操作输出了什么。
+
+```mermaid
+flowchart TB
+    T[生产工作台窗口]
+    T --> SU[剧情单元]
+    T --> DC[每日检查]
+    T --> GD[Graph 诊断]
+    T --> RD[运行时调试]
+    T --> AA[素材审计]
+    T --> AC[素材候选]
+    T --> IT[图片工具]
+    T --> AS[动画拼合]
+    T --> AT[素材任务]
+    T --> CP[AI 素材探针]
+```
+
+---
+
+## 10 个 Tab 一览
+
+| # | Tab | 一句话 | 详情 |
+|---|---|---|---|
+| 1 | **剧情单元** | 把一块剧情包成可验收的工作包 | [剧情单元验收](./story-unit) |
+| 2 | **每日检查** | 每天开工先跑一遍体检 | [每日检查](./daily-check) |
+| 3 | **Graph 诊断** | 查信号、旗标、任务、对白路由有没有断 | [Graph 诊断](./graph-diag) |
+| 4 | **运行时调试** | 游戏跑着时抓状态、看 trace | [运行时调试](./runtime-debug) |
+| 5 | **素材审计** | 哪些素材被引用、哪些缺、哪些多余 | [素材审计](./asset-audit) |
+| 6 | **素材候选** | 看 AI 生成出来的候选图过没过 | [素材候选](./asset-candidate) |
+| 7 | **图片工具** | 单张抠图、缩放、裁边 | [图片工具](./image-tools) |
+| 8 | **动画拼合** | 把多帧拼成动画条 | [动画拼合](./anim-sheet) |
+| 9 | **素材任务** | 填需求、生成 prompt、交给 AI 执行 | [素材任务](./asset-task) |
+| 10 | **AI 素材探针** | 界面上叫 Codex / GPT，试 prompt、看 token | [AI 素材探针](./codex-probe) |
+
+---
+
+## 典型一天
+
+1. 打开工作台 → **每日检查** → 点「运行每日检查」，有 error 先修。
+2. 去主编辑器改今天要做的剧情。
+3. 回到 **剧情单元**，选对应单元，补齐验收路线，跑三步验收。
+4. 验收不过 → **Graph 诊断** 或 **运行时调试** 查原因，**复制报告** 交给 AI 同事修。
+5. 缺素材 → **素材审计** 看缺口 → **素材任务** 下发 → **素材候选** 验收 → **图片工具** / **动画拼合** 收尾。
+
+---
+
+## 雾津例子
+
+你要验收「码头铁环男孩」这一段：
+
+1. 主编辑器里把对白和任务改完，保存。
+2. `./dev.sh game start` 打开游戏页面。
+3. `./dev.sh workbench` → **剧情单元** → 左侧选「铁环男孩初遇」。
+4. 点「操作向导」看下一步该填什么；验收路线里用「选场景」「NPC」「对话」搭好路线，不手写任何编号。
+5. 点「检查脚本」→「发送到游戏运行」→「完成并记录结果」。
+6. 过了就把制作状态改成「通过」；不过就「复制当前单元报告」去修。
+
+---
 
 ## 相关
 

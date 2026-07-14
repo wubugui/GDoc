@@ -2,7 +2,7 @@
   "label": "生产工作台",
   "position": 3,
   "link": {
-    "type": "generated-index",
-    "slug": "/editors/workbench"
+    "type": "doc",
+    "id": "workbench-overview"
   }
 }

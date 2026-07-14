@@ -4,6 +4,6 @@
   "link": {
     "type": "generated-index",
     "slug": "/dev",
-    "description": "给开发者的进阶文档：项目双壳结构、Godot 移植工作流、命令清单、资源管线。"
+    "description": "双壳协作、Godot 移植、DVC 资源管线与提交流程——工作流向，不贴源码。"
   }
 }

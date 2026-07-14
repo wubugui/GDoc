@@ -1,44 +1,113 @@
 ---
 id: chronicle-sim-v2
-title: chronicle_sim_v2 编年史模拟器 v2
+title: 编年史 v2
 sidebar_position: 1
 slug: /editors/sim-domain/chronicle-sim-v2
+description: 多 Agent 叙事沙盒 GUI——用文件当档案库，周迭代推演雾津世界线（偏生产/实验）。
 ---
 
-# chronicle_sim_v2 编年史模拟器 v2
+# 编年史 v2
 
-编年史模拟器 v2——"文件即数据库" + Cline CLI 驱动的多 Agent 叙事沙盒。
+若你想让多个「角色 Agent」在雾津设定里 **按周互动、写编年史、落盘成档案**，而不是手改每一条任务——**编年史 v2** 提供 **桌面 GUI** 与 **命令行周模拟**。数据以 **文件夹即档案库** 方式存放，适合叙事实验、世界观压力测试、生产管线旁路沙盒。
 
-| 属性 | 值 |
-|---|---|
-| 模块 | `tools.chronicle_sim_v2` |
-| 形态 | PySide6 GUI + CLI 周模拟 |
-| 启动 | `./dev.sh chronicle-sim-v2` |
-| 文档状态 | 🟡 有 README(偏运维) |
+:::info[和 v3 别混]
+`./dev.sh chronicle-sim-v2` 是 **v2**；`./dev.sh chronicle-sim`（不带版本号）是 **v3**。开错命令会进到另一套界面。
+:::
 
-## 用途
+---
 
-以"文件即数据库"为存储,借 Cline CLI 驱动多 Agent 推进叙事,构成可周迭代的编年史沙盒。GUI 用于交互,命令行用于批量周模拟。
+## 干什么
 
-## 启动
+- **GUI**：浏览运行目录、发起模拟、看 Agent 产出与周次结果。
+- **周模拟**：按周推进，多 Agent 借外部 CLI 驱动写叙事片段（需本机已装对应 Agent 工具链）。
+- **档案库**：每次运行落在独立目录，可对比不同世界线。
+- **不负责**替代主编辑器任务/叙事图——实验结论若要进正式游戏，仍须人手迁回主编辑器。
+
+---
+
+## 怎么开
+
+**GUI（常用）**
 
 ```bash
-# GUI:
 ./dev.sh chronicle-sim-v2
-# 命令行周模拟:
-PYTHONPATH="$PWD" .tools/venv/bin/python tools/chronicle_sim_v2/scripts/run_simulation_once.py <run_dir> --week 1
-# 等价封装:
-./dev.sh chronicle-week ...
 ```
 
-## 关键事实
+**Web 控制台**
 
-- 🟡 有 README(`tools/chronicle_sim_v2/README.md`,偏运维)。
-- 依赖 Node 20+ 与 `cline`。
-- GUI 主窗为 `gui/main_window.py:MainWindow`。
-- **task 名易混**:`chronicle-sim-v2` → v2,而 `chronicle-sim`(不带版本号)→ v3。
+点 **编年史模拟** 里与 **v2** 对应的入口（若控制台区分版本）。
+
+**命令行周模拟（批量）**
+
+由生产同事提供的周模拟脚本，指定运行目录与周次——适合无人值守跑一整季。具体参数问项目负责人或看运行目录里的说明文件。
+
+---
+
+## 一步步怎么用（GUI）
+
+1. `./dev.sh chronicle-sim-v2` 打开主窗。
+2. 选或新建 **运行目录**（一次实验一个文件夹）。
+3. 配置参与 Agent、世界观提示、周次上限（以界面为准）。
+4. 点 **开始 / 下一周**，等待 Agent 产出写入档案。
+5. 阅读各周生成的叙事摘要、事件列表。
+6. 满意的概念 **人工摘选** 进主编辑器任务/图对话；档案本身留在运行目录备查。
+
+---
+
+## 何时用
+
+| 情况 | 建议 |
+|---|---|
+| 试「若纸人势力三周后控制码头」一类假设 | v2 沙盒周推 |
+| 正式改寻狗记主线 | 主编辑器叙事图 + 任务 |
+| 要图驱动、纯 CLI 节点推演 | 考虑 [编年史 v3](./chronicle-sim-v3) |
+| 本机没装 Agent CLI | 先装依赖，否则周模拟起不来 |
+
+---
+
+## 当心什么
+
+| 当心 | 说明 |
+|---|---|
+| 与 v3 命令混用 | 见页首 info |
+| 沙盒产出直接当 canon | 必须策划审核再迁入工程数据 |
+| 运行目录手删 | 档案不可恢复 |
+| Agent 幻觉 | 产出当灵感，不当最终台本 |
+
+---
+
+## 工作流
+
+```mermaid
+flowchart LR
+  CFG[世界观 / Agent 配置] --> V2[编年史 v2]
+  V2 --> ARCH[运行档案目录]
+  ARCH --> READ[人工阅读筛选]
+  READ --> ED[主编辑器 正式内容]
+```
+
+---
+
+## 雾津例子
+
+1. 新建运行 `sim_dock_rivalry_w4`，设关二狗、纸人、庙祝三 Agent。
+2. 跑 4 周，看码头控制权事件是否自发产生可玩冲突。
+3. 第 3 周产出「夜祭后纸人现身」桥段写得不错——摘成任务梗概，进主编辑器 **任务** 面板手建正式任务。
+4. 档案夹保留，和策划会上对照「沙盒 vs 定稿」差异。
+
+---
+
+## 和相关工具怎么配合
+
+| 工具 | 关系 |
+|---|---|
+| [编年史 v3](./chronicle-sim-v3) | 图驱动 CLI 推演，界面不同 |
+| [主编辑器](../main-editor/overview) | 正式内容落点 |
+| [叙事状态机](../narrative-domain/narrative-editor-web) | 定稿主线仍在这里编 |
+
+---
 
 ## 相关
 
-- [chronicle_sim_v3 编年史模拟器 v3](./chronicle-sim-v3)
-- [工具速查表](../tool-matrix)
+- [编年史 v3](./chronicle-sim-v3)
+- [工具打开方式](../launch-architecture)

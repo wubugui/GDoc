@@ -1,42 +1,112 @@
 ---
 id: scene-depth-editor
-title: scene_depth_editor 场景深度重建
+title: 场景深度重建
 sidebar_position: 1
 slug: /editors/render-domain/scene-depth-editor
+description: 给场景背景建深度图与碰撞——让关二狗能走到茶桌后面、被柱子挡住。
 ---
 
-# scene_depth_editor 场景深度重建
+# 场景深度重建
 
-场景深度重建与碰撞编辑工具——为场景背景生成深度图与碰撞数据，补足主编辑器改不到的部分。
+等距场景若所有人像贴在一张平板上，街就假了。**场景深度重建**从背景图估算**远近深度**，并编辑**碰撞区**，让角色走过去该被桌腿挡住、不能穿桌而过。主编辑器 **场景** 面板只能调少量深度相关参数；**背景层主体、深度图、碰撞数据**要靠本工具导出。详见 [危险区](../concepts/danger-zone)。
 
-| 属性 | 值 |
-|---|---|
-| 模块 | `tools.scene_depth_editor` |
-| 形态 | 混合 UI(macOS 走 Qt 兼容层 `qt_compat`，其它平台走 Tkinter + PIL) |
-| 启动 | `python -m tools.scene_depth_editor` |
-| 文档状态 | 🔴 无 README(仅 docstring) |
+---
 
-## 用途
+## 干什么
 
-为场景背景重建深度并编辑碰撞。左面板提供 image / depth / camera / mapping 等控件，配合 `DepthEstimator`(含 `MODEL_OPTIONS` 模型选项)估算深度图。这是**主编辑器的盲区补充**——场景 `backgrounds` 与 `depthConfig` 主体(`M` / `shader` / `collision` / `depth_map`)在主编辑器里改不到,须靠本工具导出。
+- 加载场景背景，**自动生成**深度图（远近灰度）。
+- **人工修整**桌沿、栏杆、柱子边缘。
+- **编辑碰撞**——角色走不过去的区域，与画面前景对齐。
+- **导出**深度与碰撞，供游戏遮挡与走位使用。
 
-## 启动
+---
+
+## 怎么开
+
+**没有** `./dev.sh` 短命令：
 
 ```bash
-python -m tools.scene_depth_editor
-# 未登记 dev.sh / console，也可经主编辑器菜单打开
+./dev.sh editor
 ```
 
-## 关键事实
+菜单 **工具 → 外部工具** → **场景深度**。
 
-- 🔴 无 README，仅有 docstring "Scene depth reconstruction and collision editor"。
-- 窗口标题为"场景深度重建工具"。
-- 左面板控件覆盖 image / depth / camera / mapping。
-- 依赖 `DepthEstimator`，其 `MODEL_OPTIONS` 提供可选深度模型。
-- 未登记 `dev.sh` / console,只能 `python -m` 或经主编辑器菜单启动。
+工具打开后加载当前工程场景列表，选中要处理的场景。
+
+---
+
+## 一步步怎么用
+
+1. 确认背景已 [入库](../asset-domain/asset-ingest)，主编辑器 **场景** 已指向该背景。
+2. 打开场景深度工具，列表选场景——如 **满堂茶客** 茶馆内景。
+3. 左侧调 **图像 / 深度 / 相机 / 映射** 等参数（以界面为准），点 **估算深度**。
+4. 对比原图与深度预览，**笔刷或工具修**桌沿、栏杆——前景要更「近」。
+5. 进入 **碰撞编辑**，在走不过去的地方勾区域，与深度前景对齐。
+6. **导出**到工程约定位置。
+7. 回主编辑器 **场景** 刷新，F5 走进去验遮挡与穿模。
+
+---
+
+## 何时用
+
+| 情况 | 建议 |
+|---|---|
+| 新场景背景画完 | 深度 + 碰撞一次做完再摆 NPC |
+| 角色穿桌、穿柱 | 回工具修深度与碰撞 |
+| 只改容差、地面偏移 | 主编辑器场景面板可能够用 |
+| 换了一张新背景图 | 必须重跑深度，旧深度不能复用 |
+
+---
+
+## 当心什么
+
+| 当心 | 说明 |
+|---|---|
+| 深度估错边缘 | 挡人错位，像飘在桌上 |
+| 碰撞过大 | 角色离桌很远就被挡住 |
+| 碰撞过小 | 仍能穿模 |
+| 未导出就预览 | 主编辑器 F5 仍用旧数据 |
+| 与视差/滤镜无关 | 本工具只管深度与碰撞 |
+
+---
+
+## 工作流
+
+```mermaid
+flowchart LR
+  BG[背景图入库] --> SD[场景深度重建]
+  SD --> DEPTH[深度图]
+  SD --> COL[碰撞数据]
+  DEPTH --> SC[场景面板 引用]
+  COL --> SC
+  SC --> PV[F5 走位验证]
+  DEPTH --> LV[光照体积烘焙]
+```
+
+---
+
+## 雾津例子
+
+1. 茶馆内景 `mantang_chake_interior` 背景入库，场景已绑定。
+2. 场景深度工具估算深度，修茶桌前沿与栏杆立柱。
+3. 碰撞勾住桌腿、柜台，留过道可走。
+4. 导出后 F5，关二狗从过道过，被桌挡时应半身藏在桌后。
+5. 深度图可交给 [光照体积烘焙](./lightvolume-lab) 做氛围光。
+
+---
+
+## 和相关工具怎么配合
+
+| 工具 / 面板 | 关系 |
+|---|---|
+| [场景面板](../panels/scene) | 引用深度配置；少量参数在此改 |
+| [光照体积烘焙](./lightvolume-lab) | 消费深度图烘焙光照 |
+| [教程：给场景加遮挡/深度](../../tutorials/scene-depth) | 端到端练习 |
+
+---
 
 ## 相关
 
-- [主编辑器 · 概览](../main-editor/overview)
-- [创作面 · Authoring Surface](../../reference/authoring-surface)
-- [工具速查表](../tool-matrix)
+- [危险区](../concepts/danger-zone)
+- [光照体积烘焙](./lightvolume-lab)
+- [工具打开方式](../launch-architecture)

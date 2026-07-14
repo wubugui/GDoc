@@ -1,0 +1,10 @@
+{
+  "label": "通用概念",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "slug": "/editors/concepts",
+    "title": "通用概念",
+    "description": "主编辑器里反复出现的概念：危险区、动作、条件、富文本、Web 控制台。"
+  }
+}

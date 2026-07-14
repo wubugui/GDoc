@@ -102,7 +102,7 @@ const config = {
       announcementBar: {
         id: 'build-stage-complete', // 换阶段时改 id,让关过的用户重新看到
         content:
-          '🏮 雾津折子已铺满 —— 编辑器手册(20+ 工具)、开发文档、教程、玩家手册俱已点灯。持续增补中。',
+          '雾津折子已按计划铺满：教程、编辑器手册（含 30 面板与生产工作台）、参考、玩家手册、开发向俱已点灯。实操截图会持续补进。',
         backgroundColor: '#1a140d',
         textColor: '#e0a44e',
         isCloseable: true,
@@ -138,8 +138,12 @@ const config = {
             position: 'left',
             label: '参考',
           },
-          // 玩家手册是第 5 阶段内容,当前仅占位,先不放进主导航
-          // (仍可通过站内搜索或 /docs/player/intro 直达)。上线时再取消注释。
+          {
+            type: 'docSidebar',
+            sidebarId: 'playerSidebar',
+            position: 'left',
+            label: '玩家手册',
+          },
         ],
       },
       footer: {
@@ -158,7 +162,11 @@ const config = {
               },
               {
                 label: '开发文档',
-                to: '/docs/dev/architecture',
+                to: '/docs/dev/overview',
+              },
+              {
+                label: '玩家手册',
+                to: '/docs/player/intro',
               },
             ],
           },
@@ -170,8 +178,16 @@ const config = {
                 to: '/docs/editors/tool-matrix',
               },
               {
-                label: '启动架构',
-                to: '/docs/editors/launch-architecture',
+                label: '工具打开方式',
+                to: '/docs/reference/open-tools',
+              },
+              {
+                label: '术语表',
+                to: '/docs/reference/glossary',
+              },
+              {
+                label: '危险区',
+                to: '/docs/reference/danger-zone',
               },
             ],
           },
