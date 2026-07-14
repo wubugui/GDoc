@@ -1,0 +1,30 @@
+.banner {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  border-radius: 14px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center 42%;
+  margin: 0 0 2rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  box-shadow: 0 16px 40px -20px rgba(0, 0, 0, 0.7);
+}
+.inner {
+  padding: 1.4rem 1.6rem;
+}
+.title {
+  font-family: var(--ifm-heading-font-family);
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #f6ecd6;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8), 0 0 30px rgba(224, 164, 78, 0.25);
+}
+.subtitle {
+  margin-top: 0.3rem;
+  color: #e2d3b5;
+  font-size: 1rem;
+  max-width: 44rem;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.85);
+}

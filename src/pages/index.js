@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 
@@ -34,18 +35,28 @@ const SECTIONS = [
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
+  const heroUrl = useBaseUrl('/img/hero.jpg');
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
+    <header
+      className={clsx('hero', styles.heroBanner)}
+      style={{'--gd-hero': `url(${heroUrl})`}}>
       <div className="container">
-        <Heading as="h1" className="hero__title">
+        <Heading as="h1" className={clsx('hero__title', styles.heroTitle)}>
           {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <p className={clsx('hero__subtitle', styles.heroSubtitle)}>
+          在雾津的油灯下，编纂一座游戏 —— {siteConfig.tagline}
+        </p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
+            className="button button--primary button--lg"
             to="/docs/editors/overview">
-            进入编辑器手册 🛠️
+            🏮 进入编辑器手册
+          </Link>
+          <Link
+            className={clsx('button button--outline button--lg', styles.heroGhost)}
+            to="/docs/tutorials/intro">
+            5 分钟跑起来 →
           </Link>
         </div>
       </div>

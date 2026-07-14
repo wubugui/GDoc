@@ -3,68 +3,82 @@ id: overview
 title: 编辑器总览
 sidebar_position: 1
 slug: /editors/overview
-description: GameDraft 20+ 编辑器/工具的心智地图——两个统一入口、按域导览、以及做内容前必懂的"危险区"概念。
+description: GameDraft 编辑器手册的入口——先认两个门,再按需要挑工具。像在雾津的油灯下,一笔一笔把游戏编纂出来。
 ---
 
 import {ToolCount} from '@site/src/components/ToolMatrix';
+import PageBanner from '@site/src/components/PageBanner';
+
+<PageBanner
+  img="/img/banner-editors.jpg"
+  title="编辑器手册"
+  subtitle="一盏油灯,一方书案 —— GameDraft 的一整套工具,就是你编纂这座游戏的笔与墨。" />
 
 # 编辑器总览
 
-GameDraft 配套了一套 **<ToolCount /> 个编辑器/工具**，覆盖游戏内容的几乎所有方面——场景、对白、过场、任务、物品、规矩、小游戏，以及资源管线（抠图、动画、视差）、渲染（深度、光照）、文案、叙事模拟。
+做 GameDraft 的内容，就像在雾津的书案上编一本册子：场景、对白、过场、任务、物品、规矩、小游戏……每一样都有一件趁手的工具。整套工具有 **<ToolCount /> 件**，听着多，但你**平时只需要记住两扇门**。
 
-本手册教你**怎么用每一个工具**。
+## 先认两扇门
 
----
+<div style={{margin: '1.5rem 0'}}>
+<svg viewBox="0 0 820 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="两个入口示意图" style={{width: '100%', height: 'auto'}}>
+  <defs>
+    <marker id="gd-arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#8a7a5c" />
+    </marker>
+  </defs>
+  {/* 门一:主编辑器 */}
+  <rect x="70" y="30" width="290" height="96" rx="12" fill="#1f1810" stroke="#e0a44e" strokeWidth="2" />
+  <text x="215" y="66" textAnchor="middle" fill="#f0e7d2" fontSize="22" fontFamily="serif" fontWeight="600">🏮 主编辑器</text>
+  <text x="215" y="94" textAnchor="middle" fill="#c9bda1" fontSize="15">桌面应用 · 改内容就开它</text>
+  <text x="215" y="114" textAnchor="middle" fill="#8a7a5c" fontSize="12" fontFamily="monospace">./dev.sh editor</text>
+  {/* 门二:Web 控制台 */}
+  <rect x="460" y="30" width="290" height="96" rx="12" fill="#1a1712" stroke="#5a8a86" strokeWidth="2" />
+  <text x="605" y="66" textAnchor="middle" fill="#f0e7d2" fontSize="22" fontFamily="serif" fontWeight="600">🧭 Web 控制台</text>
+  <text x="605" y="94" textAnchor="middle" fill="#c9bda1" fontSize="15">浏览器 · 不知选谁就开它</text>
+  <text x="605" y="114" textAnchor="middle" fill="#8a7a5c" fontSize="12" fontFamily="monospace">./dev.sh console</text>
+  {/* 箭头 */}
+  <path d="M215,126 L215,196" stroke="#8a7a5c" strokeWidth="2" markerEnd="url(#gd-arrow)" fill="none" />
+  <path d="M605,126 L605,196" stroke="#8a7a5c" strokeWidth="2" markerEnd="url(#gd-arrow)" fill="none" />
+  {/* 底:工具箱 */}
+  <rect x="70" y="205" width="680" height="90" rx="12" fill="#161d1c" stroke="#3a2f20" strokeWidth="1.5" />
+  <text x="410" y="240" textAnchor="middle" fill="#e0a44e" fontSize="18" fontFamily="serif">一整套编辑器 / 工具</text>
+  <text x="410" y="268" textAnchor="middle" fill="#c9bda1" fontSize="14">场景 · 对白 · 过场 · 任务 · 物品 · 规矩 · 小游戏 · 抠图 · 动画 · 视差 · 光照 · 文案 · 模拟</text>
+</svg>
+</div>
 
-## 两个统一入口
+| 门 | 什么时候开 | 一句话 |
+|---|---|---|
+| **[🏮 主编辑器](./main-editor/overview)** | 要**改游戏内容** | 你的主工作台，游戏里几乎所有东西都在这里编——场景、对白、任务、物品、规矩、小游戏。 |
+| **[🧭 Web 控制台](./web-console)** | **不知道该用哪个工具** | 一块仪表盘，列了一排工具按钮，还能一键跑游戏、构建、跑测试。当"工具箱"翻。 |
 
-所有工具共享一条启动链（详见[启动架构](./launch-architecture)）。日常使用时，你只需记住**两个入口**：
-
-| 入口 | 命令 | 形态 | 适合什么时候用 |
-|---|---|---|---|
-| **[主编辑器](./main-editor/overview)** | `./dev.sh editor` | 桌面应用 | 编辑**游戏内容**——场景/对白/任务/物品/规矩/小游戏等。内容创作的核心工作台，内含 30 个面板，并可通过 `Tools → External tools` 菜单一键拉起 9 个外部编辑器。 |
-| **[Web 控制台](./web-console)** | `./dev.sh console` | 浏览器页面 | 一站式**启动器/仪表盘**——列了 14 个工具按钮，还能运行游戏、构建、跑测试、看治理台。不知道"该用哪个工具"时，从这里找。 |
-
-:::info[推荐上手姿势]
-**内容创作** → 直接开主编辑器（`./dev.sh editor`）。
-**不知道该用啥** → 开 Web 控制台（`./dev.sh console`）当工具箱。
+:::tip[记不住就记这句]
+**改东西 → 开主编辑器。犯迷糊 → 开 Web 控制台。** 其余工具，需要时再从这两扇门里找。
 :::
 
----
+## 想直接翻某件工具
 
-## 工具矩阵
+按"用来做什么"分门别类，点名字进详情：
 
-完整速查表见 [**工具速查表**](./tool-matrix)，包含每个工具的用途、形态、启动命令、文档状态。这里按域给一个快速导览（点工具名进详情页）：
+- **在主编辑器里**（一个窗口装下大部分活）：场景、叙事、规则经济、注册表、资源本地化——共 30 块面板，外加[三件贯穿始终的顺手控件](./main-editor/shared-action-editor)。
+- **素材与动画**：[asset_browser](./asset-domain/asset-browser) · [asset_ingest](./asset-domain/asset-ingest) · [image_resizer](./asset-domain/image-resizer) · [video_to_atlas](./asset-domain/video-to-atlas) · [animation_pipeline](./asset-domain/animation-pipeline) · [anim_preview](./asset-domain/anim-preview)
+- **对话与叙事**：[dialogue_graph_editor](./narrative-domain/dialogue-graph-editor) · [graph_editor](./narrative-domain/graph-editor) · [narrative_editor_web](./narrative-domain/narrative-editor-web) · [copy_manager](./narrative-domain/copy-manager)
+- **画面与光影**：[scene_depth_editor](./render-domain/scene-depth-editor) · [lightvolume_lab](./render-domain/lightvolume-lab) · [parallax_editor](./render-domain/parallax-editor) · [filter_tool](./render-domain/filter-tool)
+- **叙事模拟**：[chronicle_sim_v2](./sim-domain/chronicle-sim-v2) · [chronicle_sim_v3](./sim-domain/chronicle-sim-v3)
+- **服务**：[json_lang](./services/json-lang) · [skill_workflow_governance](./services/skill-governance)
+- **管理台**：[生产工作台](./workbench/overview)
 
-- **物理世界 / 叙事编排 / 规则经济 / 注册表 / 资源本地化** → 都在[主编辑器](./main-editor/overview)里（30 个面板 + [3 个通用控件](./main-editor/shared-action-editor)）
-- **资产与动画域**：[asset_browser](./asset-domain/asset-browser) · [asset_ingest](./asset-domain/asset-ingest) · [image_resizer](./asset-domain/image-resizer) · [video_to_atlas](./asset-domain/video-to-atlas) · [animation_pipeline](./asset-domain/animation-pipeline) · [anim_preview](./asset-domain/anim-preview)
-- **图 · 叙事 · 文案域**：[dialogue_graph_editor](./narrative-domain/dialogue-graph-editor) · [graph_editor](./narrative-domain/graph-editor) · [narrative_editor_web](./narrative-domain/narrative-editor-web) · [copy_manager](./narrative-domain/copy-manager)
-- **渲染域**：[scene_depth_editor](./render-domain/scene-depth-editor) · [lightvolume_lab](./render-domain/lightvolume-lab) · [parallax_editor](./render-domain/parallax-editor) · [filter_tool](./render-domain/filter-tool)
-- **模拟域**：[chronicle_sim_v2](./sim-domain/chronicle-sim-v2) · [chronicle_sim_v3](./sim-domain/chronicle-sim-v3)
-- **语言与治理服务**：[json_lang](./services/json-lang) · [skill_workflow_governance](./services/skill-governance)
-- **生产管理**：[production_workbench](./workbench/overview)
-- **统一入口**：[Web 控制台 dev_console](./web-console)
+> 每件工具都有独立一页：**做什么、怎么开、有什么要当心的**。完整清单和启动命令见 [工具速查表](./tool-matrix)。
 
-:::note[文档建设状态]
-每个工具都已有独立页（用途 / 形态 / 启动 / 关键事实 / 危险区）。**主编辑器 30 面板的逐面板详解**、工作台 10 Tab 的操作流程等更深的内容随阶段推进补充。
-:::
+## 动手前，先记一条保命规矩
 
----
+主编辑器保存时，有些地方会被它**整体重写**——你在文件里手写塞的东西，开一次那个面板再保存，就没了。这叫 **危险区**。
 
-## 一个必须先懂的概念：危险区
+第一次做内容，务必先花两分钟看这页：**[可编辑内容面 / 危险区](../reference/authoring-surface)**——它会告诉你哪里随便改都安全、哪里一保存就丢、哪里编辑器根本够不着。
 
-在做内容编辑前，**务必先读 [可编辑内容面 / 危险区](../reference/authoring-surface)**。它定义了两个会让数据丢失/改不到的"雷区"：
+## 顺着往下走
 
-- **重建区（会丢数据）**：编辑器保存时会**整体重建**该子结构，只写它认识的字段——你在 JSON 里手写塞的自定义键，用编辑器开一次面板保存就被抹掉。
-- **盲区（GUI 改不到）**：运行时支持、但编辑器无入口的字段——你只能手写 JSON 维护，编辑器帮不到你。
-
-落到盲区 = 超出编辑器可协作范围，应走升级流程，而不是闷头手写。
-
----
-
-## 接下来
-
-- 想跑起来 → [教程：5 分钟跑起来](../tutorials/intro)
-- 想看启动链细节 → [启动架构](./launch-architecture)
-- 想查某个工具 → [工具速查表](./tool-matrix)
-- 要做内容创作 → [主编辑器](./main-editor/overview)
+- 想先跑起来看看 → [教程：5 分钟跑起来](../tutorials/intro)
+- 想动手改内容 → [主编辑器](./main-editor/overview)
+- 想知道工具怎么串起来的 → [启动架构](./launch-architecture)
+- 想按名字查工具 → [工具速查表](./tool-matrix)

@@ -1,30 +1,267 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * 雾津折子 —— GameDraft 文档主题
+ * 取自游戏本身的调性:夜色民俗恐怖、油灯、符纸、崖城浓雾。
+ * 暗色 = "油灯夜档"(默认)· 亮色 = "符纸日档"。
+ * 主色为灯火琥珀,警示为朱砂红,标题用宋体。
  */
 
-/* 品牌蓝(与 logo / favicon / 社交卡 / 顶部提示条统一)。 */
+/* ============ 字体 ============ */
 :root {
-  --ifm-color-primary: #1f6feb;
-  --ifm-color-primary-dark: #1263e8;
-  --ifm-color-primary-darker: #115ddc;
-  --ifm-color-primary-darkest: #0e4db5;
-  --ifm-color-primary-light: #367bed;
-  --ifm-color-primary-lighter: #4283ee;
-  --ifm-color-primary-lightest: #6b9df1;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, 'PingFang SC',
+    'Noto Sans SC', 'Microsoft YaHei', 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  --ifm-heading-font-family: 'Songti SC', 'STSong', 'Source Han Serif SC',
+    'Noto Serif SC', 'SimSun', Georgia, serif;
+  --ifm-font-family-monospace: 'SFMono-Regular', 'JetBrains Mono', Menlo,
+    Consolas, monospace;
+  --ifm-code-font-size: 92%;
+  --ifm-heading-font-weight: 600;
+  --ifm-h1-font-size: 2.4rem;
 }
 
-/* 暗色模式用更亮的蓝,保证可读性。 */
+/* ============ 符纸日档(亮色) ============ */
+:root {
+  --ifm-color-primary: #a5641a;
+  --ifm-color-primary-dark: #955a17;
+  --ifm-color-primary-darker: #8d5516;
+  --ifm-color-primary-darkest: #744612;
+  --ifm-color-primary-light: #b56e2a;
+  --ifm-color-primary-lighter: #bd7a3a;
+  --ifm-color-primary-lightest: #d3a06f;
+
+  --ifm-background-color: #ece0c8;
+  --ifm-background-surface-color: #e6d8ba;
+  --ifm-navbar-background-color: rgba(233, 221, 193, 0.86);
+  --ifm-footer-background-color: #1c1710;
+
+  --ifm-font-color-base: #2d2418;
+  --ifm-heading-color: #22190e;
+  --ifm-color-content-secondary: #6b5d43;
+
+  --ifm-toc-border-color: #cdba91;
+  --ifm-table-border-color: #cdba91;
+  --ifm-table-stripe-background: rgba(120, 90, 40, 0.06);
+  --ifm-table-head-background: rgba(120, 90, 40, 0.09);
+  --ifm-hr-border-color: #cdba91;
+  --ifm-color-emphasis-200: #ddcca6;
+  --ifm-color-emphasis-300: #cdba91;
+
+  --ifm-code-background: #e0cfa6;
+  --ifm-menu-color: #4a3f2c;
+  --ifm-menu-color-active: var(--ifm-color-primary);
+  --ifm-menu-color-background-active: rgba(165, 100, 26, 0.12);
+  --ifm-menu-color-background-hover: rgba(120, 90, 40, 0.08);
+  --ifm-breadcrumb-color-active: var(--ifm-color-primary);
+  --ifm-blockquote-color: #5f5238;
+  --ifm-blockquote-border-color: var(--ifm-color-primary);
+
+  /* 语义色:警示/信息/成功都改为折子色系 */
+  --ifm-color-info: #a5641a;
+  --ifm-color-warning: #b07219;
+  --ifm-color-danger: #a83a28;
+  --ifm-color-success: #6f7a3c;
+  --ifm-color-secondary: #cdba91;
+
+  --docusaurus-highlighted-code-line-bg: rgba(120, 90, 40, 0.12);
+  --gd-fog: rgba(90, 74, 48, 0.06);
+}
+
+/* ============ 油灯夜档(暗色,默认) ============ */
 [data-theme='dark'] {
-  --ifm-color-primary: #5b9bff;
-  --ifm-color-primary-dark: #3d88ff;
-  --ifm-color-primary-darker: #2e7eff;
-  --ifm-color-primary-darkest: #0059f0;
-  --ifm-color-primary-light: #79aeff;
-  --ifm-color-primary-lighter: #88b8ff;
-  --ifm-color-primary-lightest: #b3d0ff;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #e0a44e;
+  --ifm-color-primary-dark: #d9942f;
+  --ifm-color-primary-darker: #cd8b2b;
+  --ifm-color-primary-darkest: #a97123;
+  --ifm-color-primary-light: #e5b063;
+  --ifm-color-primary-lighter: #e8b970;
+  --ifm-color-primary-lightest: #efd0a0;
+
+  --ifm-background-color: #14100b;
+  --ifm-background-surface-color: #1d1810;
+  --ifm-navbar-background-color: rgba(18, 14, 9, 0.82);
+  --ifm-footer-background-color: #0f0c07;
+
+  --ifm-font-color-base: #e6dcc6;
+  --ifm-heading-color: #f1e8d3;
+  --ifm-color-content-secondary: #ab9c7e;
+
+  --ifm-toc-border-color: #3a2f20;
+  --ifm-table-border-color: #3a2f20;
+  --ifm-table-stripe-background: rgba(224, 164, 78, 0.04);
+  --ifm-table-head-background: rgba(224, 164, 78, 0.07);
+  --ifm-hr-border-color: #3a2f20;
+  --ifm-color-emphasis-200: #2a2116;
+  --ifm-color-emphasis-300: #3a2f20;
+
+  --ifm-code-background: #231c13;
+  --ifm-menu-color: #c9bda1;
+  --ifm-menu-color-active: var(--ifm-color-primary);
+  --ifm-menu-color-background-active: rgba(224, 164, 78, 0.13);
+  --ifm-menu-color-background-hover: rgba(224, 164, 78, 0.07);
+  --ifm-breadcrumb-color-active: var(--ifm-color-primary);
+  --ifm-blockquote-color: #ab9c7e;
+  --ifm-blockquote-border-color: var(--ifm-color-primary);
+
+  --ifm-color-info: #e0a44e;
+  --ifm-color-warning: #d69a3f;
+  --ifm-color-danger: #cf6144;
+  --ifm-color-success: #97a558;
+  --ifm-color-secondary: #3a2f20;
+
+  --docusaurus-highlighted-code-line-bg: rgba(224, 164, 78, 0.12);
+  --gd-fog: rgba(224, 164, 78, 0.05);
+}
+
+/* ============ 氛围底纹:极淡的暖光晕 + 暗角 ============ */
+html,
+body {
+  background-color: var(--ifm-background-color);
+}
+[data-theme='dark'] body {
+  background-image:
+    radial-gradient(1200px 520px at 78% -8%, rgba(224, 164, 78, 0.07), transparent 60%),
+    radial-gradient(900px 600px at 0% 100%, rgba(48, 80, 78, 0.08), transparent 60%);
+  background-attachment: fixed;
+}
+:root:not([data-theme='dark']) body {
+  background-image:
+    radial-gradient(1100px 500px at 80% -10%, rgba(165, 100, 26, 0.06), transparent 60%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background: rgba(224, 164, 78, 0.28);
+}
+
+/* ============ 导航栏:夜雾磨砂 ============ */
+.navbar {
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  box-shadow: none;
+}
+.navbar__title {
+  font-family: var(--ifm-heading-font-family);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.navbar__logo {
+  height: 2rem;
+}
+.navbar__logo img {
+  border-radius: 5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* ============ 标题:宋体 + 首级带一枚灯火点 ============ */
+.markdown h1,
+h1 {
+  letter-spacing: 0.01em;
+}
+.markdown > h2 {
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  padding-bottom: 0.3rem;
+}
+
+/* ============ 链接 ============ */
+.markdown a:not(.card):not(.button) {
+  text-decoration-color: rgba(224, 164, 78, 0.4);
+  text-underline-offset: 2px;
+}
+
+/* ============ 代码 ============ */
+code {
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 5px;
+}
+
+/* ============ 表格:折子样式 ============ */
+.markdown table {
+  display: table;
+  width: 100%;
+  border: 1px solid var(--ifm-table-border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.markdown table thead {
+  font-family: var(--ifm-heading-font-family);
+}
+.markdown table thead tr {
+  border-bottom: 2px solid var(--ifm-color-primary-darkest);
+}
+
+/* ============ 引用 ============ */
+.markdown blockquote {
+  background: var(--gd-fog);
+  border-radius: 0 8px 8px 0;
+}
+
+/* ============ 卡片(首页入口 / 通用) ============ */
+.card {
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 12px;
+  transition: transform 0.18s ease, border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 10px 28px -12px rgba(224, 164, 78, 0.35);
+}
+
+/* ============ 侧边栏 ============ */
+.menu {
+  font-size: 0.92rem;
+}
+.menu__link--active:not(.menu__link--sublist) {
+  font-weight: 600;
+}
+.theme-doc-sidebar-item-category > .menu__list-item-collapsible .menu__link {
+  font-family: var(--ifm-heading-font-family);
+}
+
+/* ============ 告示块(admonition):压暗底 + 折子色左条 ============ */
+.theme-admonition {
+  border-radius: 10px;
+  border-left-width: 4px;
+}
+
+/* ============ 按钮 ============ */
+.button--primary {
+  --ifm-button-color: #1a130a;
+  font-weight: 600;
+}
+
+/* ============ 页脚:夜档 ============ */
+.footer {
+  border-top: 1px solid var(--ifm-toc-border-color);
+}
+.footer__title {
+  font-family: var(--ifm-heading-font-family);
+  color: var(--ifm-color-primary-lighter);
+}
+
+/* ============ 公告条 ============ */
+div[class^='announcementBar_'] {
+  font-family: var(--ifm-heading-font-family);
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid rgba(224, 164, 78, 0.25);
+}
+
+/* ============ 滚动条(暗档) ============ */
+[data-theme='dark'] ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+[data-theme='dark'] ::-webkit-scrollbar-track {
+  background: #0f0c07;
+}
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: #3a2f20;
+  border-radius: 6px;
+  border: 3px solid #0f0c07;
+}
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background: #55462e;
 }
