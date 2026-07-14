@@ -60,7 +60,7 @@ flowchart LR
 | `validate-data` | `tools.editor.validate` | 数据校验 |
 | `json-lang` | `tools.json_lang.build` | json_lang 索引器 |
 
-:::note 注意
+:::note[注意]
 `graph_editor`、`copy_manager`、`scene_depth_editor`、`video_to_atlas` **不在** `TOOL_MODULES` 里——它们通过**主编辑器的 `Tools → 外部工具` 菜单**拉起，或直接 `python -m tools.<module>`。详见各工具页。
 :::
 

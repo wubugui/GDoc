@@ -1,0 +1,9 @@
+{
+  "label": "语言与治理服务",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "slug": "/editors/services",
+    "description": "非编辑器但同样关键的开发服务:JSON 即语言(Schema/LSP)与 Skill/Workflow 治理台。"
+  }
+}

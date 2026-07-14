@@ -4,15 +4,17 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 
+import {toolCount} from '@site/src/components/ToolMatrix';
 import styles from './index.module.css';
 
 // 首页三个入口卡片(顺序即左→右展示)。
 // to 路径对应 docs/<分区>/<文件> 渲染后的 docId。
+// 工具数量从单一数据源 src/data/tools.json 计算,不再硬编码。
 const SECTIONS = [
   {
     title: '编辑器手册',
     emoji: '🛠️',
-    desc: 'GameDraft 的 20 个编辑器/工具怎么用——主编辑器、生产工作台、各专项编辑器。',
+    desc: `GameDraft 的 ${toolCount()} 个编辑器/工具怎么用——主编辑器、生产工作台、各专项编辑器。`,
     to: '/docs/editors/overview',
     primary: true,
   },
@@ -96,8 +98,8 @@ export default function Home() {
               <Heading as="h4">📖 关于本站</Heading>
               <p>
                 这是 GameDraft 项目的文档站,内容优先级:<strong>编辑器使用手册 &gt; 开发文档 &gt; 玩家手册</strong>。
-                文档站是独立项目,与游戏代码物理隔离。本站内容持续建设中,
-                按阶段逐步补充——目前是<strong>第 1 阶段(脚手架 + 部署链路 + 基础速查)</strong>。
+                文档站是独立项目,与游戏代码物理隔离。本站内容持续建设中,按阶段逐步补充
+                (当前阶段见页面顶部提示条)。
               </p>
             </div>
           </div>

@@ -4,27 +4,27 @@
  * work well for content-centric websites.
  */
 
-/* You can override the default Infima variables here. */
+/* 品牌蓝(与 logo / favicon / 社交卡 / 顶部提示条统一)。 */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #1f6feb;
+  --ifm-color-primary-dark: #1263e8;
+  --ifm-color-primary-darker: #115ddc;
+  --ifm-color-primary-darkest: #0e4db5;
+  --ifm-color-primary-light: #367bed;
+  --ifm-color-primary-lighter: #4283ee;
+  --ifm-color-primary-lightest: #6b9df1;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* 暗色模式用更亮的蓝,保证可读性。 */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #5b9bff;
+  --ifm-color-primary-dark: #3d88ff;
+  --ifm-color-primary-darker: #2e7eff;
+  --ifm-color-primary-darkest: #0059f0;
+  --ifm-color-primary-light: #79aeff;
+  --ifm-color-primary-lighter: #88b8ff;
+  --ifm-color-primary-lightest: #b3d0ff;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }

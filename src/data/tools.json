@@ -1,0 +1,80 @@
+{
+  "_comment": "GameDraft 全部编辑器/工具的单一数据源。工具速查表、总览页、首页的数字全部由它渲染。加/删工具只改这里。readme: green=详细可直接成手册 / yellow=有部分素材 / red=需从代码提炼。",
+  "groups": [
+    {
+      "name": "主编辑器与生产工具",
+      "slug": "主编辑器与生产工具",
+      "tools": [
+        {"name": "主编辑器", "alias": "", "form": "PySide6 桌面", "launch": "./dev.sh editor", "readme": "yellow", "note": "无独立 README,但 editor-authoring-surface.md 是事实手册"},
+        {"name": "生产工作台", "alias": "", "form": "PySide6 桌面(10 Tab)", "launch": "./dev.sh workbench", "readme": "red", "note": ""},
+        {"name": "Web 控制台", "alias": "", "form": "Python Web", "launch": "./dev.sh console", "readme": "red", "note": ""}
+      ]
+    },
+    {
+      "name": "资产域",
+      "slug": "资产域",
+      "tools": [
+        {"name": "asset_browser", "alias": "资源浏览器", "form": "PySide6 桌面", "launch": "./dev.sh asset-browser", "readme": "red", "note": ""},
+        {"name": "asset_ingest", "alias": "分类导入", "form": "PySide6 桌面", "launch": "./dev.sh asset-ingest", "readme": "red", "note": ""},
+        {"name": "image_resizer", "alias": "图片缩放/镜像", "form": "PySide6 桌面", "launch": "./dev.sh image-resizer", "readme": "red", "note": "工具极简单"},
+        {"name": "video_to_atlas", "alias": "视频→图集", "form": "PySide6 桌面", "launch": "python -m tools.video_to_atlas", "readme": "green", "note": "或主编辑器菜单"},
+        {"name": "animation_pipeline", "alias": "动画后处理", "form": "命令行(无 GUI)", "launch": "python -m tools.animation_pipeline.produce", "readme": "green", "note": "--clips-dir <dir> --out <dir>"}
+      ]
+    },
+    {
+      "name": "动画域",
+      "slug": "动画域",
+      "tools": [
+        {"name": "anim_preview", "alias": "动画预览", "form": "Web 应用(PixiJS)", "launch": "./dev.sh anim-preview", "readme": "red", "note": "或 npm run dev:anim-preview,端口 5199;启动说明在 __main__.py docstring"}
+      ]
+    },
+    {
+      "name": "图与叙事域",
+      "slug": "图与叙事域",
+      "tools": [
+        {"name": "dialogue_graph_editor", "alias": "图对话编辑器", "form": "PySide6 桌面", "launch": "./dev.sh dialogue-graph", "readme": "yellow", "note": "带 --project;authoring-surface 有专节"},
+        {"name": "graph_editor", "alias": "通用图编辑器", "form": "PySide6 桌面", "launch": "python -m tools.graph_editor --project <root>", "readme": "red", "note": "或主编辑器菜单;语义最模糊,待澄清"},
+        {"name": "narrative_editor_web", "alias": "叙事状态机", "form": "Web 应用(React Flow)", "launch": "npm run dev:narrative-editor", "readme": "red", "note": "默认嵌入主编辑器;authoring-surface 有专节"}
+      ]
+    },
+    {
+      "name": "渲染域",
+      "slug": "渲染域",
+      "tools": [
+        {"name": "scene_depth_editor", "alias": "场景深度重建", "form": "Tkinter/Qt 桌面", "launch": "python -m tools.scene_depth_editor", "readme": "red", "note": "或主编辑器菜单;macOS 走 Qt 兼容层,其它平台 Tkinter+PIL"},
+        {"name": "lightvolume_lab", "alias": "光照体积烘焙", "form": "Web 应用", "launch": "./dev.sh lightvol", "readme": "red", "note": "端口 8099;启动说明在 __main__.py docstring"},
+        {"name": "parallax_editor", "alias": "视差场景编辑器", "form": "Web 应用(PixiJS)", "launch": "./dev.sh parallax-editor", "readme": "red", "note": "或 npm run dev:parallax-editor,端口 5205"},
+        {"name": "filter_tool", "alias": "滤镜工具", "form": "Tkinter(PIL)桌面", "launch": "./dev.sh filter-tool", "readme": "green", "note": "或 npm run filter-tool;ColorMatrix 预制,输出与游戏 FilterLoader 一致"}
+      ]
+    },
+    {
+      "name": "文案域",
+      "slug": "文案域",
+      "tools": [
+        {"name": "copy_manager", "alias": "文案管理/导出", "form": "PySide6 桌面", "launch": "python -m tools.copy_manager", "readme": "red", "note": "或主编辑器菜单"}
+      ]
+    },
+    {
+      "name": "模拟域",
+      "slug": "模拟域",
+      "tools": [
+        {"name": "chronicle_sim_v2", "alias": "编年史 v2", "form": "PySide6 桌面 GUI", "launch": "./dev.sh chronicle-sim-v2", "readme": "yellow", "note": "中等,偏运维"},
+        {"name": "chronicle_sim_v3", "alias": "编年史 v3", "form": "命令行(typer)", "launch": "./dev.sh chronicle-sim", "readme": "red", "note": "18 类节点需从代码提炼"}
+      ]
+    },
+    {
+      "name": "语言服务",
+      "slug": "语言服务",
+      "tools": [
+        {"name": "json_lang", "alias": "JSON 即语言 IDE/LSP", "form": "CLI + LSP server + VS Code 扩展", "launch": "./dev.sh json-lang", "readme": "green", "note": "构建 schema;非常详细"}
+      ]
+    },
+    {
+      "name": "治理台",
+      "slug": "治理台",
+      "tools": [
+        {"name": "skill_workflow_governance", "alias": "Skill/Workflow 治理台", "form": "CLI + dashboard.html + MCP server", "launch": "./dev.sh skill-governance", "readme": "green", "note": "详细"}
+      ]
+    }
+  ]
+}

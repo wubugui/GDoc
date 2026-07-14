@@ -9,7 +9,7 @@ slug: /dev/architecture
 
 GameDraft 是一个**双技术栈并行**的游戏移植项目，外加 Python 治理工具链与 DVC/OSS 资源管线。
 
-:::note 文档建设状态
+:::note[文档建设状态]
 本页是开发文档的**占位入口**（第 4 阶段内容）。双壳结构的 C4 架构图、Godot 移植工作流、数据流详解将在第 4 阶段补充。下面先给概览。
 :::
 
@@ -53,6 +53,27 @@ graph TB
 
 **Godot 4 + TypeScript/Pixi（权威源）+ Python/PyQt（治理/编辑器）+ Node（工具/测试）+ DVC/OSS（资源）。**
 
-详见各分区后续文档。
+---
 
-> 🚧 C4 完整图、Godot 移植工作流、数据流将在**第 4 阶段**补充。
+## 常用命令速查
+
+所有命令在游戏仓库根目录（`~/AIWork/GameDraft/`）执行。
+
+| 目的 | 命令 |
+|---|---|
+| 初始化环境（只做一次） | `./bootstrap.sh` |
+| 起游戏（Vite 开发服） | `./dev.sh dev` |
+| 构建游戏 | `npm run build` |
+| 跑测试 | `npm test` |
+| 主编辑器 | `./dev.sh editor` |
+| Web 控制台（启动器） | `./dev.sh console` |
+| 生产工作台 | `./dev.sh workbench` |
+| 数据校验 | `./dev.sh validate-data` |
+| 构建 json_lang schema | `./dev.sh json-lang` |
+| 列出全部 task | `./dev.sh --help` |
+
+> 完整的"task 名 → 模块"映射见 [启动架构 · TOOL_MODULES](../editors/launch-architecture)；全部编辑器/工具见 [工具速查表](../editors/tool-matrix)。
+
+---
+
+> 🚧 C4 完整图、Godot 移植工作流、数据流详解将在**第 4 阶段**补充。

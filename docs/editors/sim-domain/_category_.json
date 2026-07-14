@@ -3,6 +3,7 @@
   "position": 7,
   "link": {
     "type": "generated-index",
-    "slug": "/editors/sim-domain"
+    "slug": "/editors/sim-domain",
+    "description": "编年史模拟器 v2/v3——文件即数据库的多 Agent 叙事沙盒与图驱动 CLI 模拟。"
   }
 }

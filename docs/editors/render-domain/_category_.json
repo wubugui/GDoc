@@ -3,6 +3,7 @@
   "position": 6,
   "link": {
     "type": "generated-index",
-    "slug": "/editors/render-domain"
+    "slug": "/editors/render-domain",
+    "description": "场景深度/碰撞重建、光照体积烘焙、视差过场、色彩滤镜——负责画面深度、光照与后期效果。"
   }
 }

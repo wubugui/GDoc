@@ -1,0 +1,53 @@
+---
+id: tool-matrix
+title: 工具速查表
+sidebar_position: 3
+slug: /editors/tool-matrix
+description: GameDraft 全部编辑器/工具的速查表——按域分组,每个工具给出用途、技术形态、启动命令与文档状态。由单一数据源渲染。
+---
+
+import ToolMatrix, {ToolCount, ReadmeStats} from '@site/src/components/ToolMatrix';
+
+# 工具速查表
+
+GameDraft 全部 **<ToolCount /> 个编辑器/工具** 的一览表。按域分组,每个工具给出用途、技术形态、启动方式、文档状态。
+
+:::info[本页由数据驱动]
+下面的表格、工具总数、文档状态统计全部从单一数据源 `src/data/tools.json` 渲染。**加/删工具、改启动命令,只需改那一个 JSON**——全站相关数字会自动同步,不会再出现"这里写 20、那里写 21"的漂移。
+:::
+
+> 想看启动链怎么串起来 → [启动架构](./launch-architecture)
+> 想知道该用哪个入口 → [编辑器总览](./overview)
+
+---
+
+## 统一启动命令
+
+绝大多数工具用 `./dev.sh <task>` 启动(task 名见下表"启动"列)。少数未注册到 `dev.sh` 的工具,用 `python -m tools.<module>` 或通过主编辑器菜单拉起。
+
+---
+
+<ToolMatrix />
+
+---
+
+## 文档状态图例
+
+| 图例 | 含义 | 写手册工作量 |
+|---|---|---|
+| 🟢 详细 | README 充分,可直接整理成用户手册 | 小 |
+| 🟡 部分 | README 偏运维,或 authoring-surface 有字段专节 | 中 |
+| 🔴 无 | 无任何文档,需从代码提炼 | 大 |
+
+---
+
+## 按文档状态统计
+
+<ReadmeStats />
+
+:::info[工作量分级(后续阶段参考)]
+- **S 级(最大)**:主编辑器(30 面板 + 约 40 共享控件)
+- **A 级(大)**:production_workbench(10 Tab)、dev_console(作为总入口必写)
+- **B 级(中)**:graph_editor、chronicle_sim_v3、copy_manager、scene_depth_editor、parallax_editor
+- **C 级(小)**:其余工具职责清晰,整理成统一格式即可
+:::

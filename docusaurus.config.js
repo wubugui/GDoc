@@ -9,22 +9,33 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'GameDraft 文档',
   tagline: 'GameDraft 编辑器与开发文档',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.svg',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
-  // 生产环境的站点 url。部署到 Cloudflare Pages 后改为你的实际域名。
-  // 例如自定义域名 https://docs.gamedraft.dev,或 Cloudflare 默认 *.pages.dev
-  url: 'https://gamedraft-docs.pages.dev',
-  // 站点服务的 /<baseUrl>/ 路径前缀。
-  // Cloudflare Pages 用自定义域名或项目根路径时填 '/'。
-  baseUrl: '/',
+  // 部署到 GitHub Pages(项目站点):https://wubugui.github.io/GDoc/
+  url: 'https://wubugui.github.io',
+  // 项目站点的路径前缀 = 仓库名。GDoc 仓库 → '/GDoc/'。
+  baseUrl: '/GDoc/',
 
-  // 增量写作时,断裂链接只警告不阻断构建。
-  onBrokenLinks: 'warn',
+  // GitHub Pages 部署所需:组织/用户名 + 仓库名 + 构建产物推送的分支。
+  // `npm run deploy` 会据此把 build/ 推到 gh-pages 分支。
+  organizationName: 'wubugui',
+  projectName: 'GDoc',
+  deploymentBranch: 'gh-pages',
+
+  // 显式声明 URL 规范化策略,避免不同托管商行为不一致导致 301 链与索引重复。
+  // false = 页面 URL 不带尾斜杠(/GDoc/docs/editors/overview)。
+  trailingSlash: false,
+
+  // 断裂链接处理分环境:
+  // - 本地增量写作(默认)只警告,不打断心流;
+  // - CI/部署构建(CI=1)直接抛错,在上线前拦住死链。
+  onBrokenLinks: process.env.CI ? 'throw' : 'warn',
+  onBrokenAnchors: process.env.CI ? 'throw' : 'warn',
 
   // 即使不用国际化,也用这个字段设置 html lang。中文站点用 'zh-Hans'。
   i18n: {
@@ -32,11 +43,11 @@ const config = {
     locales: ['zh-Hans'],
   },
 
-  // Mermaid 支持 + 增量写作时断裂 markdown 链接只警告。
+  // Mermaid 支持 + 断裂 markdown 链接分环境(本地警告、CI 抛错)。
   markdown: {
     mermaid: true,
     hooks: {
-      onBrokenMarkdownLinks: 'warn',
+      onBrokenMarkdownLinks: process.env.CI ? 'throw' : 'warn',
     },
   },
   themes: ['@docusaurus/theme-mermaid'],
@@ -48,9 +59,10 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          // 去掉默认的 "edit this page" 链接(指向外部仓库无意义)。
-          // 推到自己的 Git 仓库后再按需改回。
-          editUrl: undefined,
+          // "编辑此页" 链接。推到 Git 远程后,把仓库地址填进环境变量
+          // EDIT_URL_BASE(如 https://github.com/<org>/GameDraft-docs/edit/main/)
+          // 即自动开启;未设置时(本地/尚无远程)保持关闭,不显示无效链接。
+          editUrl: process.env.EDIT_URL_BASE || undefined,
         },
         blog: false, // 本次不启用博客
         theme: {
@@ -78,8 +90,20 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      // 社交分享卡片(og:image / twitter:image)。分享链接到微信/Twitter 时显示。
+      image: 'img/social-card.png',
       colorMode: {
         respectPrefersColorScheme: true,
+      },
+      // 全站"建设中"提示,承担唯一的阶段状态声明(单一数据源)。
+      // 进入下一阶段时只改这一处;用户可点 × 关闭(按 id 记忆)。
+      announcementBar: {
+        id: 'build-stage-phase-1', // 换阶段时改 id,让关过的用户重新看到
+        content:
+          '🚧 本文档站持续建设中 —— 当前处于<strong>第 1 阶段</strong>(脚手架 + 部署链路 + 编辑器速查)。内容按阶段逐步补充。',
+        backgroundColor: '#1f6feb',
+        textColor: '#ffffff',
+        isCloseable: true,
       },
       navbar: {
         title: 'GameDraft 文档',
@@ -112,12 +136,8 @@ const config = {
             position: 'left',
             label: '参考',
           },
-          {
-            type: 'docSidebar',
-            sidebarId: 'playerSidebar',
-            position: 'left',
-            label: '玩家手册',
-          },
+          // 玩家手册是第 5 阶段内容,当前仅占位,先不放进主导航
+          // (仍可通过站内搜索或 /docs/player/intro 直达)。上线时再取消注释。
         ],
       },
       footer: {
