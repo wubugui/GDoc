@@ -234,12 +234,28 @@ code {
 }
 
 /* ============ 页脚:夜档 ============ */
-.footer {
+/* footer.style='dark' 会套 Infima 默认板岩配色,覆盖成折子墨黑 + 帕金纸文字 */
+.footer,
+.footer--dark {
+  --ifm-footer-background-color: #0f0c07;
+  --ifm-footer-color: #b8ab92;
+  --ifm-footer-link-color: #cabd9f;
+  --ifm-footer-link-hover-color: var(--ifm-color-primary);
+  --ifm-footer-title-color: var(--ifm-color-primary-lighter);
   border-top: 1px solid var(--ifm-toc-border-color);
 }
 .footer__title {
   font-family: var(--ifm-heading-font-family);
   color: var(--ifm-color-primary-lighter);
+}
+.footer__link-item {
+  color: var(--ifm-footer-link-color);
+}
+.footer__link-item:hover {
+  color: var(--ifm-color-primary);
+}
+.footer__copyright {
+  color: #8a7c60;
 }
 
 /* ============ 公告条 ============ */
