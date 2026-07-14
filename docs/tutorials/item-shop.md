@@ -218,4 +218,4 @@ flowchart TD
 | [商店面板](../editors/panels/shop) | 价目表怎么维护 |
 | [怎么编排动作](../editors/concepts/actions) | 给予物品、打开商店等 |
 | [做一个遭遇](./encounter) | 消耗物品作为选项门槛 |
-| [危险区](../editors/concepts/danger-zone) | 真正要当心的与其实没事的 |
+| [危险区](../editors/concepts/danger-zone) | 危险区速查 |

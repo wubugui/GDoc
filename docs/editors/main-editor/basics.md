@@ -175,6 +175,6 @@ flowchart LR
 
 - **[主编辑器总览](./overview)** —— 30 块面板各管什么活
 - **[运行预览](./run-preview)** —— 边改边看游戏
-- **[危险区](../concepts/danger-zone)** —— 真正要当心的与其实没事的
+- **[危险区](../concepts/danger-zone)** —— 危险区速查
 - **[怎么编排动作](../concepts/actions)** · **[怎么设条件](../concepts/conditions)** —— 面板里最常用的两个通用控件
 - **[快捷键大全](../../reference/shortcuts)** —— 完整按键表（参考区）

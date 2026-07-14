@@ -198,4 +198,4 @@ flowchart TD
 | [档案面板](../editors/panels/archive) | 分类与字段 |
 | [音频面板](../editors/panels/audio) | 四类声音 |
 | [富文本字段](../editors/main-editor/shared-rich-text) | 引用与标签 |
-| [危险区](../editors/concepts/danger-zone) | 真正要当心的与其实没事的 |
+| [危险区](../editors/concepts/danger-zone) | 危险区速查 |

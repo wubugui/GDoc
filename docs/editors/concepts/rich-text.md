@@ -152,4 +152,4 @@ flowchart LR
 - **[档案面板](../panels/archive)** —— 带插图的长文正文
 - **[叠图面板](../panels/overlay)** —— 插图短名登记
 - **[怎么设条件](./conditions)** —— 决定这段文字出不出现
-- **[危险区](./danger-zone)** —— 真正要当心的与其实没事的
+- **[危险区](./danger-zone)** —— 危险区速查
