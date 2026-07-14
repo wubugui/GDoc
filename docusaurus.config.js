@@ -93,16 +93,18 @@ const config = {
       // 社交分享卡片(og:image / twitter:image)。分享链接到微信/Twitter 时显示。
       image: 'img/social-card.png',
       colorMode: {
-        respectPrefersColorScheme: true,
+        // 游戏是夜色民俗恐怖调性,默认给"油灯夜档"暗色;仍可切到"符纸日档"亮色。
+        defaultMode: 'dark',
+        respectPrefersColorScheme: false,
       },
       // 全站"建设中"提示,承担唯一的阶段状态声明(单一数据源)。
       // 进入下一阶段时只改这一处;用户可点 × 关闭(按 id 记忆)。
       announcementBar: {
-        id: 'build-stage-phase-1', // 换阶段时改 id,让关过的用户重新看到
+        id: 'build-stage-complete', // 换阶段时改 id,让关过的用户重新看到
         content:
-          '🚧 本文档站持续建设中 —— 当前处于<strong>第 1 阶段</strong>(脚手架 + 部署链路 + 编辑器速查)。内容按阶段逐步补充。',
-        backgroundColor: '#1f6feb',
-        textColor: '#ffffff',
+          '🏮 雾津折子已铺满 —— 编辑器手册(20+ 工具)、开发文档、教程、玩家手册俱已点灯。持续增补中。',
+        backgroundColor: '#1a140d',
+        textColor: '#e0a44e',
         isCloseable: true,
       },
       navbar: {
