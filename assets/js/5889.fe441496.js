@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkgamedraft_docs=self.webpackChunkgamedraft_docs||[]).push([["5889"],{8488(e,c,a){a.d(c,{createArchitectureServices:()=>r.S});var r=a(89221);a(51400)}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkgamedraft_docs=self.webpackChunkgamedraft_docs||[]).push([["1668"],{86569(e,r,s){s.r(r),s.d(r,{default:()=>f});var a=s(74848);s(96540);var c=s(34164),d=s(34308),t=s(88287),u=s(22831),n=s(31160);function f(e){return(0,a.jsx)(d.e3,{className:(0,c.A)(t.G.wrapper.docsPages),children:(0,a.jsx)(n.A,{children:(0,u.v)(e.route.routes)})})}}}]);
