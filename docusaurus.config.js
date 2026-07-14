@@ -9,7 +9,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config = {
   title: 'GameDraft 文档',
   tagline: 'GameDraft 编辑器与开发文档',
-  favicon: 'img/favicon.svg',
+  favicon: 'img/favicon.png',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
@@ -111,7 +111,7 @@ const config = {
         title: 'GameDraft 文档',
         logo: {
           alt: 'GameDraft',
-          src: 'img/logo.svg',
+          src: 'img/logo.png',
         },
         items: [
           {

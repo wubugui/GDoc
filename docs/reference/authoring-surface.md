@@ -9,8 +9,8 @@ slug: /reference/authoring-surface
 
 > 本页是策划模式与内容创作的**配套参考**：逐面板列出编辑器实际暴露的可编辑字段、操作能力，以及最重要的——**危险区**（做内容时哪里安全、哪里会丢数据、哪里 GUI 改不到）。
 
-:::note[文档建设状态]
-本页内容源自 GameDraft 项目的 `docs/editor-authoring-surface.md`（2026-06-14 快照）。**权威源是编辑器代码本身**——字段若有出入以代码为准。第 5 阶段会从 `compatibility/*.json` 自动渲染更精细的"可编辑字段面"。
+:::note[关于本页]
+本页内容源自 GameDraft 项目的 `docs/editor-authoring-surface.md`（2026-06-14 快照）。**权威源是编辑器代码本身**——字段若有出入以代码为准。未来计划从 `compatibility/*.json` 自动渲染更精细的"可编辑字段面"（活文档）。
 :::
 
 ## 危险区的两层含义
@@ -123,6 +123,6 @@ slug: /reference/authoring-surface
 
 ---
 
-:::info[更细的字段面在路上]
-各面板逐字段的"可编辑 / 重建区 / 盲区"完整清单，源自 `editor-authoring-surface.md`，将在第 5 阶段从 `compatibility/*.json` 自动渲染。当前如需精确查询，请参考 GameDraft 仓库内的原始文档。
+:::info[更细的字段面]
+各面板逐字段的"可编辑 / 重建区 / 盲区"完整清单，源自 `editor-authoring-surface.md`。未来计划从 `compatibility/*.json` 自动渲染成活文档（代码变则文档变）。当前如需精确查询，请参考 GameDraft 仓库内的原始文档。
 :::
