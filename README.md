@@ -29,36 +29,33 @@ npm run build      # 产出静态文件到 build/
 npm run serve      # 本地预览构建产物（http://localhost:3000）
 ```
 
-## 部署到 Cloudflare Pages
+## 部署到 GitHub Pages
 
-本站部署到 Cloudflare Pages，通过 Git 连接实现自动部署。
+本站部署到 **GitHub Pages**，线上地址：<https://wubugui.github.io/GDoc/>。
 
-### 一次性配置
+- **源码**在 `main` 分支；**构建产物**推送到 `gh-pages` 分支，Pages 从该分支的根目录 `/` 提供服务。
+- 站点配置（`docusaurus.config.js`）：`url = https://wubugui.github.io`、`baseUrl = /GDoc/`、`organizationName = wubugui`、`projectName = GDoc`、`deploymentBranch = gh-pages`。
 
-1. **推到 Git 远程仓库**（GitHub / GitLab / Gitee 均可）：
+### 重新部署（改完文档后）
 
-   ```bash
-   git remote add origin <你的仓库地址>
-   git push -u origin main
-   ```
+```bash
+git add -A && git commit -m "更新文档" && git push   # 先推源码到 main
+GIT_USER=wubugui USE_SSH=false npm run deploy          # 构建并推到 gh-pages
+```
 
-2. **Cloudflare Pages 连接仓库**：
-   - 登录 [Cloudflare Dashboard](https://dash.cloudflare.com) → Workers & Pages → Create → Pages → Connect to Git
-   - 选择本仓库
-   - 构建配置：
-     - **Framework preset**: `Docusaurus`
-     - **Build command**: `npm run build`
-     - **Build output directory**: `build`
-     - **Node version**（环境变量）: `NODE_VERSION = 20`（或 22）
-   - 点 Save and Deploy
+`npm run deploy` 会 `docusaurus build` 后把 `build/` 推到 `gh-pages`。约 30 秒后线上生效。
 
-3. **部署后**：每次 push 到主分支自动重新构建部署。PR 会生成预览部署。
+> 首次部署时 `gh-pages` 分支尚不存在，`docusaurus deploy` 会因找不到该分支而报错——已通过手动创建 `gh-pages` 分支解决；此后 `npm run deploy` 可正常增量部署。
 
-### 配置站点域名
+### 可选：改用 GitHub Actions 自动部署
 
-部署成功后，Cloudflare 会给一个 `*.pages.dev` 域名。如需自定义域名，在 Pages 项目设置里绑定。
+想让每次 push 到 `main` 就自动构建部署（免手动 `npm run deploy`）：
 
-> ⚠️ 绑定自定义域名后，记得改 `docusaurus.config.js` 里的 `url` 字段为你的实际域名。
+1. 给 `gh` 令牌补 `workflow` 权限：`gh auth refresh -h github.com -s workflow`
+2. 加一个 Actions 工作流（`actions/upload-pages-artifact` + `actions/deploy-pages`），推到 `main`
+3. 仓库 **Settings → Pages → Source** 改为 **GitHub Actions**
+
+> 当前令牌无 `workflow` 权限，故先用 `gh-pages` 分支方式部署；上面三步可随时升级为自动部署。
 
 ## 项目结构
 
@@ -84,7 +81,7 @@ GameDraft-docs/
 - **框架**: Docusaurus 3.10 (classic preset)
 - **搜索**: `@easyops-cn/docusaurus-search-local`（本地中文搜索，无需 Algolia）
 - **图表**: `@docusaurus/theme-mermaid`（Mermaid 流程图/架构图）
-- **部署**: Cloudflare Pages
+- **部署**: GitHub Pages（`gh-pages` 分支）
 
 ## 文档建设阶段
 
