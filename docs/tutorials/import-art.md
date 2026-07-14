@@ -1,7 +1,7 @@
 ---
 id: tutorials-import-art
 title: 导入一张素材
-sidebar_position: 12
+sidebar_position: 23
 slug: /tutorials/import-art
 description: 把电脑里一张立绘或背景图，按分类放进游戏资源库，再在编辑器里引用。
 ---

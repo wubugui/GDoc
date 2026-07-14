@@ -1,7 +1,7 @@
 ---
 id: tutorials-video-to-anim
 title: 把视频做成角色动画
-sidebar_position: 13
+sidebar_position: 24
 slug: /tutorials/video-to-anim
 description: 一段视频抽帧拼图集，挂进动画浏览，在游戏里走起来。
 ---

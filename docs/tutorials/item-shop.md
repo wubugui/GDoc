@@ -1,7 +1,7 @@
 ---
 id: tutorials-item-shop
 title: 加物品、开商店
-sidebar_position: 11
+sidebar_position: 22
 slug: /tutorials/item-shop
 description: 登记一件雾津里的新物品，挂进城隍庙香烛铺，让玩家买得到、用得上。
 ---

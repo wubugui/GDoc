@@ -1,7 +1,7 @@
 ---
 id: tutorials-scene-depth
 title: 给场景加遮挡/深度
-sidebar_position: 15
+sidebar_position: 8
 slug: /tutorials/scene-depth
 description: 让关二狗能走到茶桌后面、被柱子挡住——给场景背景建深度与碰撞。
 ---

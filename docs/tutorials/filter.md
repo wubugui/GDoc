@@ -1,7 +1,7 @@
 ---
 id: tutorials-filter
 title: 调一个画面滤镜
-sidebar_position: 14
+sidebar_position: 10
 slug: /tutorials/filter
 description: 给雾津某场景加一层色调氛围——昏黄油灯、雨夜青灰——调参导出后在游戏里生效。
 ---

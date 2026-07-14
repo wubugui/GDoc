@@ -1,7 +1,7 @@
 ---
 id: tutorials-parallax
 title: 做一个视差过场
-sidebar_position: 16
+sidebar_position: 9
 slug: /tutorials/parallax
 description: 多层雾津街景随镜头缓缓错动——在视差编辑器里摆图层、拉轨迹，过场里播出来。
 ---

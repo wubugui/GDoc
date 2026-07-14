@@ -1,7 +1,7 @@
 ---
 id: tutorials-rule
 title: 立一条规矩
-sidebar_position: 10
+sidebar_position: 19
 slug: /tutorials/rule
 description: 在规矩面板新建规矩（象/理/术三层），并让场景里真正用到它。
 ---

@@ -1,7 +1,7 @@
 ---
 id: tutorials-encounter
 title: 做一个遭遇
-sidebar_position: 9
+sidebar_position: 18
 slug: /tutorials/encounter
 description: 配置遭遇事件：多个选项、规矩门槛、判定结果与奖励。
 ---

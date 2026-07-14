@@ -1,7 +1,7 @@
 ---
 id: tutorials-minigame
 title: 做一个小游戏关卡
-sidebar_position: 17
+sidebar_position: 25
 slug: /tutorials/minigame
 description: 糖画转盘、扎纸、水域三类小游戏各怎么配一关——概览流程，细节进对应面板。
 ---

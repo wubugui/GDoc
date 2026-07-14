@@ -1,7 +1,7 @@
 ---
 id: tutorials-preview-verify
 title: 用运行预览验证改动
-sidebar_position: 19
+sidebar_position: 33
 slug: /tutorials/preview-verify
 description: 边改边看：主编辑器运行预览、独立窗口、浏览器游戏三种验法，改完立刻在游戏里确认。
 ---

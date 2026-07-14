@@ -1,7 +1,7 @@
 ---
 id: tutorials-first-line
 title: 改你的第一句对白
-sidebar_position: 2
+sidebar_position: 11
 slug: /tutorials/first-line
 description: 找到并改掉一句台词，进游戏确认玩家能看到新对白。
 ---
@@ -144,7 +144,7 @@ flowchart TD
 两边编的是同一份图，只是入口不同的窗口。养成习惯：改完在**其中一边**保存后，切到另一边前先重新打开一次图，避免看到编辑前的旧画布缓存。
 
 **保存后，节点里我多填的一个字段消失了？**
-台词节点保存时只保留检查器里能填的项——说话人、台词、多拍列表、下一跳。别指望在别处塞的额外信息能留下来，这是图对话的重建区，详见 [危险区](../editors/concepts/danger-zone)。
+先确认这是不是引用的东西被删了或改了 id——这是最常见的原因。台词节点的检查器覆盖了说话人、台词、多拍列表、头像等全部活字段，保存后都会保留；详见 [危险区](../editors/concepts/danger-zone)。
 
 ---
 
