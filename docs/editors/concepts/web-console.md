@@ -166,7 +166,7 @@ flowchart LR
 
 ## 接下来
 
-- **[主编辑器总览](../main-editor/overview)** —— 30 块面板
+- **[主编辑器总览](../main-editor/overview)** —— 31 块面板
 - **[工具速查表](../tool-matrix)** —— 全工具一览
 - **[工具打开方式](../launch-architecture)** —— 每个工具怎么开
 - **[教程：5 分钟跑起来](../../tutorials/intro)** —— 第一次启动
