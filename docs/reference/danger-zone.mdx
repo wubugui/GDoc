@@ -29,7 +29,8 @@ import PageBanner from '@site/src/components/PageBanner';
 
 | 要改的东西 | 去哪改 |
 |---|---|
-| 场景**多层背景**、深度 / 遮挡碰撞主体 | **[场景深度工具](../editors/render-domain/scene-depth-editor)**；照明/探针/部分深度导出也可用 **[角色照明实验室](../editors/render-domain/character-lighting-lab)** |
+| 场景**多层背景**、深度 / 遮挡碰撞主体 | 正典深度与角色照明导出以 **[角色照明实验室](../editors/render-domain/character-lighting-lab)** 为主路径；旧 **[场景深度工具](../editors/render-domain/scene-depth-editor)** 仅作对照 |
+| 角色烘焙照明载荷 | 改背景 / 深度 / 曝光后必须在实验室重烘并重新导出；哈希失配游戏会禁用烘焙回落曲线。原理见 [伪世界角色照明](../dev/character-lighting) |
 | **玩家化身**外观细节 | **[玩家化身面板](../editors/panels/avatar)** |
 | 旗标的**「迁移」「运行时」块** | 暂无界面，手改或找维护者 |
 | 实体像素密度匹配 | 暂无界面，手改 |

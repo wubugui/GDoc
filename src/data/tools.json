@@ -49,7 +49,7 @@
       "slug": "渲染域",
       "tools": [
         {"name": "scene_depth_editor", "alias": "场景深度重建", "form": "桌面窗口", "launch": "主编辑器 → 外部工具", "readme": "green", "note": "遮挡/深度主体", "doc": "render-domain/scene-depth-editor"},
-        {"name": "character_lighting_lab", "alias": "角色照明实验室", "form": "浏览器", "launch": "./dev.sh char-lighting", "readme": "green", "note": "照明/探针/可导出深度", "doc": "render-domain/character-lighting-lab"},
+        {"name": "character_lighting_lab", "alias": "角色照明实验室", "form": "浏览器", "launch": "./dev.sh char-lighting", "readme": "green", "note": "v2 伪世界照明主路径", "doc": "render-domain/character-lighting-lab"},
         {"name": "lightvolume_lab", "alias": "光照体积烘焙", "form": "浏览器", "launch": "./dev.sh lightvol", "readme": "green", "note": "端口 8099", "doc": "render-domain/lightvolume-lab"},
         {"name": "parallax_editor", "alias": "视差场景编辑器", "form": "浏览器", "launch": "./dev.sh parallax-editor", "readme": "green", "note": "端口 5205", "doc": "render-domain/parallax-editor"},
         {"name": "filter_tool", "alias": "滤镜工具", "form": "桌面窗口", "launch": "./dev.sh filter-tool", "readme": "green", "note": "", "doc": "render-domain/filter-tool"}
