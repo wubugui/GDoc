@@ -1,0 +1,198 @@
+<!doctype html><html lang=zh-Hans dir=ltr class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-dev/dev-character-lighting" data-has-hydrated=false><head><meta charset=UTF-8><meta name=generator content="Docusaurus v3.10.2"><title data-rh=true>伪世界角色照明 | GameDraft 文档</title><meta data-rh=true name=viewport content="width=device-width, initial-scale=1.0"/><meta data-rh=true name=twitter:card content=summary_large_image /><meta data-rh=true property=og:image content=https://wubugui.github.io/GDoc/img/social-card.png /><meta data-rh=true name=twitter:image content=https://wubugui.github.io/GDoc/img/social-card.png /><meta data-rh=true property=og:url content=https://wubugui.github.io/GDoc/docs/dev/character-lighting /><meta data-rh=true property=og:locale content=zh_Hans /><meta data-rh=true name=docusaurus_locale content=zh-Hans /><meta data-rh=true name=docsearch:language content=zh-Hans /><meta data-rh=true name=docusaurus_version content=current /><meta data-rh=true name=docusaurus_tag content=docs-default-current /><meta data-rh=true name=docsearch:version content=current /><meta data-rh=true name=docsearch:docusaurus_tag content=docs-default-current /><meta data-rh=true property=og:title content="伪世界角色照明 | GameDraft 文档"/><meta data-rh=true name=description content="从伪世界坐标、HDR 分账、final gather 到探针缓存与运行时逐像素着色——v2 完整链路。"/><meta data-rh=true property=og:description content="从伪世界坐标、HDR 分账、final gather 到探针缓存与运行时逐像素着色——v2 完整链路。"/><link data-rh=true rel=icon href=/GDoc/img/favicon.png /><link data-rh=true rel=canonical href=https://wubugui.github.io/GDoc/docs/dev/character-lighting /><link data-rh=true rel=alternate href=https://wubugui.github.io/GDoc/docs/dev/character-lighting hreflang=zh-Hans /><link data-rh=true rel=alternate href=https://wubugui.github.io/GDoc/docs/dev/character-lighting hreflang=x-default /><script data-rh=true type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://wubugui.github.io/GDoc/docs/dev/character-lighting","name":"伪世界角色照明","position":1}]}</script><link rel=stylesheet href=/GDoc/assets/css/styles.d4165ae8.css /><script src=/GDoc/assets/js/runtime~main.ac56ae76.js defer></script><script src=/GDoc/assets/js/main.0704812d.js defer></script></head><body><svg style="display: none;"><defs>
+<symbol id=theme-svg-external-link viewBox="0 0 24 24"><path fill=currentColor d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme-69f")}catch(t){}}();document.documentElement.setAttribute("data-theme",t||"dark"),document.documentElement.setAttribute("data-theme-choice",t||"dark")}(),function(){try{for(var[t,e]of new URLSearchParams(window.location.search).entries())if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss-69f")}catch(t){}return!1}())</script><div id=__docusaurus><link rel=preload as=image href=/GDoc/img/logo.png /><div role=region aria-label=跳到主要内容><a class=skipToContent_fXgn href=#__docusaurus_skipToContent_fallback>跳到主要内容</a></div><div class="theme-announcement-bar announcementBar_mb4j" style=background-color:#1a140d;color:#e0a44e role=banner><div class=announcementBarPlaceholder_vyr4></div><div class="content_knG7 announcementBarContent_xLdY">雾津折子已按计划铺满：教程、编辑器手册（含 30 面板与生产工作台）、参考、玩家手册、开发向俱已点灯。实操截图会持续补进。</div><button type=button aria-label=关闭 class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width=14 height=14><g stroke=currentColor stroke-width=3.1><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"/></g></svg></button></div><nav aria-label=主导航 class="theme-layout-navbar navbar navbar--fixed-top"><div class=navbar__inner><div class="theme-layout-navbar-left navbar__items"><button aria-label=切换导航栏 aria-expanded=false class="navbar__toggle clean-btn" type=button><svg width=30 height=30 viewBox="0 0 30 30" aria-hidden=true><path stroke=currentColor stroke-linecap=round stroke-miterlimit=10 stroke-width=2 d="M4 7h22M4 15h22M4 23h22"/></svg></button><a class=navbar__brand href=/GDoc/><div class=navbar__logo><img src=/GDoc/img/logo.png alt=GameDraft class="themedComponent_mlkZ themedComponent--light_NVdE"/><img src=/GDoc/img/logo.png alt=GameDraft class="themedComponent_mlkZ themedComponent--dark_xIcU"/></div><b class="navbar__title text--truncate">GameDraft 文档</b></a><a class="navbar__item navbar__link" href=/GDoc/docs/tutorials/intro>教程</a><a class="navbar__item navbar__link" href=/GDoc/docs/editors/overview>编辑器手册</a><a aria-current=page class="navbar__item navbar__link navbar__link--active" href=/GDoc/docs/dev/overview>开发文档</a><a class="navbar__item navbar__link" href=/GDoc/docs/reference/authoring-surface>参考</a><a class="navbar__item navbar__link" href=/GDoc/docs/player/intro>玩家手册</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type=button disabled title="system mode" aria-label="切换浅色/暗黑模式（当前为system mode）"><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill=currentColor d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill=currentColor d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/></svg><svg viewBox="0 0 24 24" width=24 height=24 aria-hidden=true class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill=currentColor d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"/></svg></button></div><div class=navbarSearchContainer_Bca1><div class="navbar__search searchBarContainer_NW3z" dir=ltr><input placeholder=搜索 aria-label=Search class="navbar__search-input searchInput_YFbd" value="" /><div class="loadingRing_RJI3 searchBarLoadingRing_YnHq"><div></div><div></div><div></div><div></div></div></div></div></div></div><div role=presentation class=navbar-sidebar__backdrop></div></nav><div id=__docusaurus_skipToContent_fallback class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class=docsWrapper_hBAB><button aria-label=回到顶部 class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type=button></button><div class=docRoot_UBD9><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class=sidebarViewport_aRkj><div class=sidebar_njMd><nav aria-label=文档侧边栏 class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/GDoc/docs/dev/overview><span class=linkLabel_WmDU>项目总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/GDoc/docs/dev/architecture><span class=linkLabel_WmDU>项目架构总览</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/GDoc/docs/dev/commands><span class=linkLabel_WmDU>常用工作流命令</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/GDoc/docs/dev/godot-port><span class=linkLabel_WmDU>Godot 移植工作流</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/GDoc/docs/dev/asset-pipeline><span class=linkLabel_WmDU>资源管线</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link menu__link--active" aria-current=page href=/GDoc/docs/dev/character-lighting><span class=linkLabel_WmDU>伪世界角色照明</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/GDoc/docs/dev/resources><span class=linkLabel_WmDU>延伸阅读</span></a><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class=menu__link href=/GDoc/docs/dev/contributing><span class=linkLabel_WmDU>参与与提交流程</span></a></ul></nav></div></div></aside><main class=docMainContainer_TBSr><div class="container padding-top--md padding-bottom--lg"><div class=row><div class="col docItemCol_VOVn"><div class=docItemContainer_Djhp><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label=页面路径><ul class=breadcrumbs><li class=breadcrumbs__item><a aria-label=主页面 class=breadcrumbs__link href=/GDoc/><svg viewBox="0 0 24 24" class=breadcrumbHomeIcon_YNFT><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill=currentColor /></svg></a><li class="breadcrumbs__item breadcrumbs__item--active"><span class=breadcrumbs__link>伪世界角色照明</span></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type=button class="clean-btn tocCollapsibleButton_TO0P">本页总览</button></div><div class="theme-doc-markdown markdown"><header><h1>伪世界角色照明</h1></header>
+<p>这页把 GameDraft <strong>角色照明 v2</strong> 从问题边界、数学定义，一路归纳到实验室烘焙与游戏运行时消费。读完你应能回答：为什么不是「从一张图恢复真实三维光照」，运行时为何等于同一估计器的压缩版，以及改深度 / 曝光 / 折叠 / NEE 分别动到账本哪一格。</p>
+<p>工具怎么点按钮 → <a class="" href=/GDoc/docs/editors/render-domain/character-lighting-lab>角色照明实验室</a>。<br/>
+<!-- -->权威推导原稿在游戏仓库 <code>artifact/Design/伪世界角色照明-修正版完整推导-2026-07-21.md</code>；接入进展见同目录规划稿。本页是文档站侧的定稿归纳。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=0-先给结论>0. 先给结论<a href=#0-先给结论 class=hash-link aria-label="0. 先给结论的直接链接" title="0. 先给结论的直接链接" translate=no>​</a></h2>
+<p>本项目<strong>不能</strong>、也<strong>不追求</strong>从单张二维背景恢复唯一真实三维世界与绝对物理光照——信息不足，不可辨识。</p>
+<p>真正求解、且已落地的目标是：</p>
+<blockquote>
+<p>在正典深度、遮挡边界、伪世界标定与 HDR 标定共同定义的<strong>可控伪世界</strong>里，估计纸片角色每个着色点从场景可见表面接收到的条件辐照度；对单张图未提供的方向域，用显式先验分段补全。</p>
+</blockquote>
+<p>由此直接得到的工程后果：</p>
+<table><thead><tr><th>后果<th>含义<tbody><tr><td>立绘 = albedo<td>角色素材不再当最终自发光；无光则暗，有暖光则暖，背光只失去直接项，仍可吃画面里已有的间接光<tr><td>深度分离<td>屏幕重合但伪世界深度相距很远的像素不得互相照明<tr><td>显示 / 着色解耦<td>显示 quad 仍可朝相机；着色主法线可独立转向，隆起法线绕主法线生成<tr><td>terminal radiance<td>可见命中读取背景线性 HDR 出射后停止；对背景再递归会双算<tr><td>补全互斥<td>原射线命中 → 折叠命中 → 低频闭包，三分支互斥，不叠加<tr><td>reference = 缓存真值<td>离线逐像素 final gather 是项目 reference；运行时 L2 / L1 / BIN 是同一估计器的压缩，不是另一套光照逻辑</table>
+<p>「正确」的含义：在已声明的伪世界几何与补全先验下，积分、坐标、能量记账与压缩彼此一致——不是声称恢复了客观真实世界。</p>
+<!-- -->
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=1-问题边界>1. 问题边界<a href=#1-问题边界 class=hash-link aria-label="1. 问题边界的直接链接" title="1. 问题边界的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-正典输入唯一允许进烘焙的>1.1 正典输入（唯一允许进烘焙的）<a href=#11-正典输入唯一允许进烘焙的 class=hash-link aria-label="1.1 正典输入（唯一允许进烘焙的）的直接链接" title="1.1 正典输入（唯一允许进烘焙的）的直接链接" translate=no>​</a></h3>
+<ul>
+<li class="">背景图 <code>C_ldr(s)</code></li>
+<li class=""><strong>场景深度工具链产出的正典深度</strong> <code>D(s)</code>（照明侧不得私养第二份深度）</li>
+<li class="">伪投影标定 <code>K_pseudo</code>（<code>p_pu</code>、中心、俯角 / 起伏等）</li>
+<li class="">遮挡 / 碰撞重建参数（断边、厚度、地面延拓）</li>
+<li class="">场景曝光 <code>EV_scene</code>、局部增益图 <code>g(s)=gainEV(s)</code></li>
+<li class="">角色反照率贴图、透明度、位置 / 尺寸、着色法线参数</li>
+</ul>
+<p>深度与 HDR 缓存必须带<strong>内容哈希 + 算法 / 参数版本</strong>。上游一变，旧缓存只能标过期，禁止静默继续用。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=12-永远推不出的量>1.2 永远推不出的量<a href=#12-永远推不出的量 class=hash-link aria-label="1.2 永远推不出的量的直接链接" title="1.2 永远推不出的量的直接链接" translate=no>​</a></h3>
+<p>背面几何与辐射、真实相机焦距 / 姿态 / 绝对尺度、像素级真实 albedo / BRDF、LDR 截断前的绝对 nit、画外天空与墙后光源……</p>
+<p>用语纪律：</p>
+<table><thead><tr><th>词<th>含义<tbody><tr><td><strong>恢复</strong><td>由已有数据与确定坐标变换唯一算出<tr><td><strong>标定</strong><td>在等价类里选尺度或曝光基准<tr><td><strong>补全</strong><td>对不可观测域施加明确先验</table>
+<p>补全必须写进公式、能关闭、能对比、能报置信度；把它说成「真实恢复」会使验收失效。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=2-伪世界坐标>2. 伪世界坐标<a href=#2-伪世界坐标 class=hash-link aria-label="2. 伪世界坐标的直接链接" title="2. 伪世界坐标的直接链接" translate=no>​</a></h2>
+<p>正交伪投影约定（当前工具）：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">q(s) = [ (s_x - c_x)/p_pu , (c_y - s_y)/p_pu , D(s) ]</span><br/></div></code></pre></div></div>
+<p>更一般地写成正典反投影 <code>q = Pi_pseudo^{-1}(s, D(s); K_pseudo)</code>。照明代码只许调用这一正典函数，禁止各自重新解释深度。</p>
+<p>从角色点 <code>q0</code> 沿伪世界方向 <code>ω</code> 步进：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">r(t) = q0 + t · ω ,   t > ε</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">s(t) = Pi_pseudo(r(t))</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">g(t) = r_z(t) - D(s(t))   # 符号跨越后细化交点</span><br/></div></code></pre></div></div>
+<p>步长必须以伪世界距离 <code>t</code> 定义；屏幕直线 raymarch 不能替代伪世界距离步进——那是「射线很多却打不中街道」的经典坑。</p>
+<p>展示用世界坐标若再乘正交矩阵 <code>R</code>：<code>x = R q + t</code>，则距离与夹角在 <code>q</code> 与 <code>x</code> 间保持。RT 可在 <code>q</code> 空间做；展示相机只是观察工具，不参与光照定义。</p>
+<p><strong>关键：</strong> <code>p_pu</code> 与深度尺度共同选定伪度量后，几何、面元面积与 <code>1/r^2</code> 必须同尺度。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=3-从深度到可遮挡伪几何>3. 从深度到可遮挡伪几何<a href=#3-从深度到可遮挡伪几何 class=hash-link aria-label="3. 从深度到可遮挡伪几何的直接链接" title="3. 从深度到可遮挡伪几何的直接链接" translate=no>​</a></h2>
+<p>优先级：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">遮挡边界正确 > 结构切变正确 > 低频深度合理 > 像素级细节</span><br/></div></code></pre></div></div>
+<p>三类对象不要混为一谈：</p>
+<table><thead><tr><th>对象<th>用途<tbody><tr><td><code>S_vis</code><td>可见前表面网格<tr><td><code>O_light</code><td>光线传播占据体（有限厚度 + 受约束地面延拓）<tr><td><code>O_sprite</code><td>游戏角色前后遮挡用的正典深度 / 碰撞</table>
+<p>地面延拓只对有地面证据且与可达区连通的部分生效；其余空洞留给方向补全，禁止「整图下方都是地面」。</p>
+<p>实验室侧另有：<strong>起伏增益</strong>放大相对地面的深度残差；<strong>世界空间碰撞</strong>与屏幕遮挡解耦（可走进建筑背后被正确遮挡，但不被禁止移动）；导出场景深度时把标定 + 编辑写回场景正典深度配置。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=4-角色显示几何与着色法线解耦>4. 角色：显示几何与着色法线解耦<a href=#4-角色显示几何与着色法线解耦 class=hash-link aria-label="4. 角色：显示几何与着色法线解耦的直接链接" title="4. 角色：显示几何与着色法线解耦的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=41-albedo>4.1 albedo<a href=#41-albedo class=hash-link aria-label="4.1 albedo的直接链接" title="4.1 albedo的直接链接" translate=no>​</a></h3>
+<p>角色贴图 RGB 经 EOTF 后当作漫反射反照率 <code>ρ</code>；默认自身不发光。零入射时线性输出为黑，但室内 <code>L_0</code> 非零的墙地仍会经 gather 照到角色。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=42-显示平面保持朝相机>4.2 显示平面保持朝相机<a href=#42-显示平面保持朝相机 class=hash-link aria-label="4.2 显示平面保持朝相机的直接链接" title="4.2 显示平面保持朝相机的直接链接" translate=no>​</a></h3>
+<p>显示顶点仍在面向伪相机的 billboard 上，避免轮廓因光照法线改变而透视走样。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=43-可调主法线--隆起>4.3 可调主法线 + 隆起<a href=#43-可调主法线--隆起 class=hash-link aria-label="4.3 可调主法线 + 隆起的直接链接" title="4.3 可调主法线 + 隆起的直接链接" translate=no>​</a></h3>
+<p>主法线 <code>m_q</code> 与显示法线 <code>n_0</code> 独立；隆起函数绕 <code>n_0</code> 求导后，用最短弧旋转把隆起梯度对齐到 <code>m_q</code>，得到逐像素着色法线 <code>n_s</code>。中心接近 <code>m_q</code>，轮廓向切向倾斜。</p>
+<p><strong>实现约束：</strong> 法线必须由当前角色宽高、透明轮廓、隆起量与主法线实时（或同次烘焙）导出；禁止读取一张按固定隆起烘死、运行时又允许改 bulge 的法线图。游戏侧对动画图集按 EDT→高斯→梯度<strong>逐格现算法线</strong>，零法线贴图。</p>
+<p>遮挡代理与着色代理可以拆开：遮挡用脚点深度比较的 billboard；着色用世界直立 quad（受光位置正确）。直立 quad 参与深度测试会让上半身穿前景——双代理后消失。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=5-ldr--hdr相对场景辐射不是绝对-nit>5. LDR → HDR：相对场景辐射，不是绝对 nit<a href=#5-ldr--hdr相对场景辐射不是绝对-nit class=hash-link aria-label="5. LDR → HDR：相对场景辐射，不是绝对 nit的直接链接" title="5. LDR → HDR：相对场景辐射，不是绝对 nit的直接链接" translate=no>​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">C_lin = EOTF_sRGB(C_ldr)</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">L_0   = 100 · C_lin · 2^EV_scene</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">L_hdr = L_0 · 2^g(s)          其中 g(s) = gainEV(s)</span><br/></div></code></pre></div></div>
+<p>拆账防双算：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">ΔLe = L_0 · (2^g(s) - 1)</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">L_hdr = L_0 + ΔLe</span><br/></div></code></pre></div></div>
+<ul>
+<li class=""><code>L_0</code>：原画面已表达的基础出射（含画里直接 / 间接）</li>
+<li class=""><code>ΔLe</code>：为恢复 LDR 压掉的发光核心而追加的能量</li>
+</ul>
+<p>语义模型（SAM 门控）只产<strong>发光候选</strong>；局部对比 / 亮核 / 溢光 / 环境能量决定增益。曝光 <code>EV_scene</code> 必须真正乘进 <code>L_0</code>；背景与角色共用同一展示曝光与 tone mapper。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=6-渲染方程与-terminal-radiance>6. 渲染方程与 terminal radiance<a href=#6-渲染方程与-terminal-radiance class=hash-link aria-label="6. 渲染方程与 terminal radiance的直接链接" title="6. 渲染方程与 terminal radiance的直接链接" translate=no>​</a></h2>
+<p>Lambert：<code>f_r = ρ/π</code>。辐照度与角色出射：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">E(q, n) = ∫ over Ω+(n) of  L_i(q, ω) · (n·ω) dω</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">L_o^char = (ρ / π) · E</span><br/></div></code></pre></div></div>
+<p>伪世界首次命中背景可见面 <code>x</code> 后，采用漫反射终端先验：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">L_i(q, ω) ≈ L_hdr(s_x)     # 诊断：整图 HDR</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">L_i(q, ω) ≈ L_0(s_x)       # 生产 + NEE：普通命中只读 L_0</span><br/></div></code></pre></div></div>
+<p>这是 <strong>one-bounce final gather with terminal scene radiance</strong>：背景照亮角色，角色不反向改背景。对同一可见命中继续向场景递归 = 双算。</p>
+<p>背对蜡烛仍应吃到墙地 <code>L_0</code>；若接近纯黑，先查射线 / 法线 / 相交 / miss，不要用常量环境掩盖坐标错误。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=7-nee-与唯一记账>7. NEE 与唯一记账<a href=#7-nee-与唯一记账 class=hash-link aria-label="7. NEE 与唯一记账的直接链接" title="7. NEE 与唯一记账的直接链接" translate=no>​</a></h2>
+<p>生产模式开 NEE 时：</p>
+<ol>
+<li class="">普通 gather 命中只读 <code>L_0</code></li>
+<li class=""><code>ΔLe</code> <strong>只</strong>经显式发光面元（NEE）加入</li>
+<li class="">同一增量不得既在射线命中又在 NEE</li>
+<li class="">手工太阳同理，只能有一个入口</li>
+</ol>
+<p>面元增量直接辐照度（示意）：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">E_emit^dir(q,n) ≈ Σ_j ΔLe_j · A_j · V(q,x_j)</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">                  · max(n·ℓ_j, 0) · max(n_j·(-ℓ_j), 0) / max(r_j², r_min²)</span><br/></div></code></pre></div></div>
+<p>火苗 / 窗洞等法线不可靠时，可显式用双面发射（第二余弦换 1）。发光体按各向同性 surfel 处理更稳。期望守恒：开关 NEE 时均值几乎不变是分账正确的信号；NEE 买的是低方差与贴近光源的确定性亮斑。</p>
+<p>探针 atlas 四分账列布局：<code>[base+cov | amb | emitray | nee]</code>。运行时「NEE 直接光」可开关，无需 rebake。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=8-缺失方向的分段补全>8. 缺失方向的分段补全<a href=#8-缺失方向的分段补全 class=hash-link aria-label="8. 缺失方向的分段补全的直接链接" title="8. 缺失方向的分段补全的直接链接" translate=no>​</a></h2>
+<p>miss 原因：穿出画界、朝向相机侧无可见壳、进入未知空间……</p>
+<p>相机侧折叠（伪相机平面法线 <code>v_cam</code>）：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">F(ω) = ω - 2 (ω · v_cam) v_cam</span><br/></div></code></pre></div></div>
+<p>生产终端估计器 <code>T(q,ω)</code>（三分支<strong>互斥</strong>）：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">1. 原射线命中            → L_base(Hit(q, ω))</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">2. miss 且相机侧折叠命中 → L_base(Hit(q, F(ω)))</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">3. 其余 miss              → J̄(q, ψ(ω))</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">   # ψ：相机侧用 F(ω)，否则用 ω</span><br/></div></code></pre></div></div>
+<p>NEE 开时 <code>L_base = L_0</code>；NEE 关的诊断模式才允许 <code>L_base = L_hdr</code>。</p>
+<ul>
+<li class=""><strong>折叠</strong> <code>F</code>：在伪相机平面法线反射方向，再真追局部几何</li>
+<li class=""><strong><code>J̄</code></strong>：稀疏闭包探针上、只用真实命中拟合的 L2 低频辐射场；同连通分量插值</li>
+</ul>
+<p>旧说法「完全不能开折叠」过强；真正禁止的是<strong>已命中样本上再叠加</strong>折叠 / 闭包。折叠开着时 miss 集合≈空，miss 强度旋钮会「看起来无效」——是特性。</p>
+<p>运行时 miss 策略旋钮（无需 rebake）：</p>
+<table><thead><tr><th>策略<th>合成<tbody><tr><td>miss 环境强度 <code>s</code><td><code>E = E_hit + s · E_amb</code>（<code>s=0</code> 严格黑）<tr><td>miss 不计入<td><code>E = E_hit / cov</code>（hit 归一）</table>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=9-reference-final-gather--探针缓存>9. Reference final gather → 探针缓存<a href=#9-reference-final-gather--探针缓存 class=hash-link aria-label="9. Reference final gather → 探针缓存的直接链接" title="9. Reference final gather → 探针缓存的直接链接" translate=no>​</a></h2>
+<p>余弦重要性采样 <code>p(ω)=(n·ω)/π</code>，无偏估计：</p>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">Ê_base+closure(q,n) = (π / N) · Σ_i T(q, ω_i)</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">Ê(q,n) = Ê_base+closure + E_emit^dir + E_sun^dir</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">L_char^ref(u,v) = β · (ρ(u,v)/π) ⊙ max(Ê(q, n_s), 0)</span><br/></div></code></pre></div></div>
+<p><code>β</code> 是素材与场景辐射单位之间的显示 / 材质标定，不是再改场景曝光。中性参考位可取 <code>β = π / Y(E(q_ref, m_q))</code>。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=91-l2-球谐>9.1 L2 球谐<a href=#91-l2-球谐 class=hash-link aria-label="9.1 L2 球谐的直接链接" title="9.1 L2 球谐的直接链接" translate=no>​</a></h3>
+<p>先缓存方向辐射的 SH，再对 Lambert 做 zonal 卷积（<code>A0=π</code>, <code>A1=2π/3</code>, <code>A2=π/4</code>）。常量环境必须满足 <code>E = π L_c</code>——这条解析测试能抓归一化错误。</p>
+<p>离线保存<strong>预卷积 irradiance 系数</strong> <code>G_lm = A_l · L_lm</code>；运行时只做 <code>Σ G_lm Y_lm(n)</code>，禁止再乘一次 <code>A_l</code>。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=92-空间插值>9.2 空间插值<a href=#92-空间插值 class=hash-link aria-label="9.2 空间插值的直接链接" title="9.2 空间插值的直接链接" translate=no>​</a></h3>
+<p>对查询点所在单元 8 角点，先插值带符号的 SH 系数（带有效性 / 同连通掩码），<strong>最后</strong>才对总辐照度 clamp。禁止先对每个 probe 的 lobe clamp 再三线性。</p>
+<p>实体内网格点不得「吸附到最近自由点却仍占原坐标」——墙对侧光照会漏进当前单元。正确做法：只在真实自由位置建探针 + 有效角点掩码 + 跨墙拒绝插值。</p>
+<p>v2 探针网格为<strong>世界空间体积</strong>（轴向对齐 x × 高度带 × 深度，覆盖地面到地面+<code>band</code> 可达带），着色时先把 <code>q</code> 变到世界再三线性——否则探针能量空间方差≈0，移动角色光照不变化。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=10-实验室管线离线>10. 实验室管线（离线）<a href=#10-实验室管线离线 class=hash-link aria-label="10. 实验室管线（离线）的直接链接" title="10. 实验室管线（离线）的直接链接" translate=no>​</a></h2>
+<p>打开：<code>./dev.sh char-lighting</code>。烘焙在软件内异步完成。</p>
+<table><thead><tr><th>阶段<th>做什么<tbody><tr><td>深度<td>单目深度（按图哈希缓存）；几何编辑笔刷 / 多边形选区可持久<tr><td>标定<td>免平面 / 免锚点：视差仿射使地面掩码上 <code>Y^2</code> 鲁棒最小<tr><td>地面场<td>Laplace 延拓 → 非平面行走面 <code>d_walk</code><tr><td>补全<td>凸出物充气 + 背景 inpaint + 行走面后填实 → 占据 / 辐射体素<tr><td>辐射<td>HDR 统一模型 + SAM 语义门控发光候选<tr><td><code>J̄</code><td>自由点球面 gather → radiance SH L2<tr><td>探针<td>世界空间网格 + Fibonacci 方向 gather → L1 / L2 / BIN 四分账<tr><td>碰撞 / 可走<td>世界 XZ 占据柱 + 可见壳高出地面差值（与屏幕遮挡解耦）</table>
+<p>四个照明模式（验收应收敛到接近）：</p>
+<table><thead><tr><th>模式<th>角色<tbody><tr><td>RT<td>逐片元 cosine 半球，体素步进，miss→折叠 / <code>J̄</code>（reference）<tr><td>L1<td>探针三线性 + 4 系数 SH<tr><td>L2<td>探针三线性 + 9 系数 SH（生产默认）<tr><td>BIN<td>探针三线性 + octahedral bin（无 SH 截断）</table>
+<p>几何签名过期时：查看器红条提示，导出深度 / 照明一律拒绝，直到重烘。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=11-运行时-v2载荷与着色>11. 运行时 v2：载荷与着色<a href=#11-运行时-v2载荷与着色 class=hash-link aria-label="11. 运行时 v2：载荷与着色的直接链接" title="11. 运行时 v2：载荷与着色的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=111-载荷位置与内容>11.1 载荷位置与内容<a href=#111-载荷位置与内容 class=hash-link aria-label="11.1 载荷位置与内容的直接链接" title="11.1 载荷位置与内容的直接链接" translate=no>​</a></h3>
+<p><code>public/resources/runtime/scenes/&lt;场景>/lighting/</code>（随场景媒体 / DVC）：</p>
+<table><thead><tr><th>产物<th>作用<tbody><tr><td><code>lighting.json</code><td>版本、背景 SHA-1、标定、世界盒、探针网格、体素布局、光源列表、地面深度范围、<code>shading</code> 场景配置<tr><td><code>atlas_l1|l2|bin.bin</code><td>探针 atlas 四分账（f16）<tr><td><code>probes_valid.bin</code><td>有效掩码<tr><td><code>vol_rad.bin</code> / <code>vol_emit.bin</code><td>体素卷 Z 切片平铺图集（shader 手写三线性，等价 sampler3D）<tr><td><code>ground_d.png</code><td>行走面深度 RG16</table>
+<p>旧 v1 三分账 bin 在导出时清除。校验器做结构 / 尺寸 / <strong>游戏侧背景哈希</strong>门禁；哈希失配 → 禁用烘焙并告警。</p>
+<p><code>shading</code> 块写入非 bake 运行时参数（模式、SPP、步长、折叠、miss、NEE、β、增益、隆起……）。游戏加载即用之初始化；F2 改动只是运行时测试，重载场景回配置。太阳为游戏侧参数，不入载荷。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=112-着色式与实验室-char_fs-同式>11.2 着色式（与实验室 CHAR_FS 同式）<a href=#112-着色式与实验室-char_fs-同式 class=hash-link aria-label="11.2 着色式（与实验室 CHAR_FS 同式）的直接链接" title="11.2 着色式（与实验室 CHAR_FS 同式）的直接链接" translate=no>​</a></h3>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">L_char(u,v) = β · (ρ/π) ⊙ max(E_base + E_closure + E_emit^dir + E_sun^dir, 0)</span><br/></div></code></pre></div></div>
+<ul>
+<li class="">角色 / NPC 挂片元滤镜，逐像素求 <code>E</code></li>
+<li class="">法线图集按舞台角色同数学现算</li>
+<li class="">脚点 <code>q</code>：场景世界坐标 → 背景像素 → 地面深度双线性 → 伪世界</li>
+<li class="">有合法载荷且开关开 → 走烘焙着色；无载荷 / 哈希过期 / 总开关关 → <strong>回落光环境曲线</strong>（旧 tone）</li>
+<li class=""><strong>禁止</strong>烘焙 tint / 曲线与烘焙着色同时相乘</li>
+</ul>
+<p>实现落点（游戏仓库）：<code>CharacterLightingSystem</code> 装载与校验载荷；<code>CharacterShadingFilter</code> 片元着色；<code>spriteNormalAtlas</code> 逐格现算法线。</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=113-与阴影--ao--深度遮挡的关系>11.3 与阴影 / AO / 深度遮挡的关系<a href=#113-与阴影--ao--深度遮挡的关系 class=hash-link aria-label="11.3 与阴影 / AO / 深度遮挡的关系的直接链接" title="11.3 与阴影 / AO / 深度遮挡的关系的直接链接" translate=no>​</a></h3>
+<p>正交、不互相接管：</p>
+<ul>
+<li class="">投影阴影、接触 AO、深度遮挡滤镜继续走既有系统</li>
+<li class="">实验室接触阴影<strong>禁止</strong>进游戏</li>
+<li class="">太阳方向与投影阴影方位角<strong>互不耦合</strong>（F2 可独立调）</li>
+</ul>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=12-内容工作流红线>12. 内容工作流（红线）<a href=#12-内容工作流红线 class=hash-link aria-label="12. 内容工作流（红线）的直接链接" title="12. 内容工作流（红线）的直接链接" translate=no>​</a></h2>
+<!-- -->
+<ol>
+<li class=""><code>./dev.sh char-lighting</code> 打开实验室</li>
+<li class="">新场景入库或重烘当前（深度→标定→体素→探针）</li>
+<li class="">几何笔刷 / 多边形改完会标几何过期 → 必须再重烘</li>
+<li class=""><strong>⇪ 导出场景深度</strong>（写回场景正典深度配置）</li>
+<li class=""><strong>⇪ 导出照明</strong>（写 runtime lighting/ + 当前面板 <code>shading</code>）</li>
+<li class="">游戏内看角色；F2「角色照明（烘焙）」可临时改参数对照 RT/L2</li>
+<li class="">无烘焙场景自动回落曲线，玩家无感</li>
+</ol>
+<p>批量迁移建议：逐场景「重烘 → 导出深度 + 照明 → 游戏验收」。旧场景深度编辑器在照明管线打通后标 deprecated（遮挡专项仍可对照）。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=13-必须过的验证>13. 必须过的验证<a href=#13-必须过的验证 class=hash-link aria-label="13. 必须过的验证的直接链接" title="13. 必须过的验证的直接链接" translate=no>​</a></h2>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=解析>解析<a href=#解析 class=hash-link aria-label=解析的直接链接 title=解析的直接链接 translate=no>​</a></h3>
+<ol>
+<li class="">常量辐射场：任意法线 <code>E = π L</code></li>
+<li class="">单方向光：背面直接项为零</li>
+<li class="">坐标旋转不变性</li>
+<li class="">深度分离：屏幕同位、深度不同不得互照</li>
+<li class="">薄墙：两侧探针不得串光</li>
+<li class="">折叠互斥：原命中时 fold / <code>J̄</code> 贡献为零</li>
+<li class="">NEE 记账：on = <code>L_0</code> + 直接增量；off 诊断才允许射线吃 <code>L_hdr</code></li>
+<li class="">法线一致性：改宽高 / bulge 后中心仍≈<code>m_q</code></li>
+</ol>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id=项目场景>项目场景<a href=#项目场景 class=hash-link aria-label=项目场景的直接链接 title=项目场景的直接链接 translate=no>​</a></h3>
+<p>室内烛火（前 / 侧 / 后）、街道、门洞墙角、起伏野外、强发光窗。至少输出：原贴图 / 仅 <code>L_0</code> / +<code>closure</code> / +NEE / reference↔L2 误差热图 / 主法线三方向 / 射线分类图。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=14-表达能力上限>14. 表达能力上限<a href=#14-表达能力上限 class=hash-link aria-label="14. 表达能力上限的直接链接" title="14. 表达能力上限的直接链接" translate=no>​</a></h2>
+<p><strong>能稳定表达：</strong> 随位置进入明暗与环境色；可见几何遮挡；主法线转向的正侧背；画面已表达的直接 / 间接；LDR 压掉的局部发光直接项；Lambert 隆起低频体积感。</p>
+<p><strong>不能：</strong> 画面无线索的背后光源；镜面 / 头发高光；完整背面三维；角色对背景动态反弹与互反射；绝对物理 nit。</p>
+<p>这些不是继续拧旋钮就能突破的——要加输入（法线材质、多视图、人工光源或真三维）至少一种。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=15-最终理论链压缩>15. 最终理论链（压缩）<a href=#15-最终理论链压缩 class=hash-link aria-label="15. 最终理论链（压缩）的直接链接" title="15. 最终理论链（压缩）的直接链接" translate=no>​</a></h2>
+<div class="language-text codeBlockContainer_Ckt0 theme-code-block" style=--prism-color:#F8F8F2;--prism-background-color:#282A36><div class=codeBlockContent_QJqH><pre tabindex=0 class="prism-code language-text codeBlock_bY9V thin-scrollbar" style=color:#F8F8F2;background-color:#282A36><code class=codeBlockLines_e6Vv><div class=token-line style=color:#F8F8F2><span class="token plain">C_ldr  --EOTF+EV-->  L_0  --gain-->  (L_0, ΔLe)</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">(s, D, K)  --Pi^{-1}-->  S_vis, O_light, q</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">(q, ω)  --pseudo RT-->  original hit | fold hit | J̄</span><br/></div><div class=token-line style=color:#F8F8F2><span class="token plain">T + ΔLe^NEE  --∫ cos θ dω-->  E(q,n)  --ρ/π-->  L_char  --shared tonemap-->  C_display</span><br/></div></code></pre></div></div>
+<p>离线算到最后一步；运行时只在 <code>E(q,n)</code> 层用探针压缩。物理假设与能量账本必须完全相同——否则「和实验室对不上」没有验收意义。</p>
+<hr/>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id=相关>相关<a href=#相关 class=hash-link aria-label=相关的直接链接 title=相关的直接链接 translate=no>​</a></h2>
+<ul>
+<li class=""><a class="" href=/GDoc/docs/editors/render-domain/character-lighting-lab>角色照明实验室（操作）</a></li>
+<li class=""><a class="" href=/GDoc/docs/editors/render-domain/scene-depth-editor>场景深度重建</a></li>
+<li class=""><a class="" href=/GDoc/docs/dev/architecture>项目架构总览</a></li>
+<li class=""><a class="" href=/GDoc/docs/dev/commands>常用工作流命令</a>（<code>char-lighting</code>）</li>
+<li class=""><a class="" href=/GDoc/docs/editors/concepts/danger-zone>危险区</a></li>
+</ul></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label=文件选项卡><a class="pagination-nav__link pagination-nav__link--prev" href=/GDoc/docs/dev/asset-pipeline><div class=pagination-nav__sublabel>上一页</div><div class=pagination-nav__label>资源管线</div></a><a class="pagination-nav__link pagination-nav__link--next" href=/GDoc/docs/dev/resources><div class=pagination-nav__sublabel>下一页</div><div class=pagination-nav__label>延伸阅读</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href=#0-先给结论 class="table-of-contents__link toc-highlight">0. 先给结论</a><li><a href=#1-问题边界 class="table-of-contents__link toc-highlight">1. 问题边界</a><ul><li><a href=#11-正典输入唯一允许进烘焙的 class="table-of-contents__link toc-highlight">1.1 正典输入（唯一允许进烘焙的）</a><li><a href=#12-永远推不出的量 class="table-of-contents__link toc-highlight">1.2 永远推不出的量</a></ul><li><a href=#2-伪世界坐标 class="table-of-contents__link toc-highlight">2. 伪世界坐标</a><li><a href=#3-从深度到可遮挡伪几何 class="table-of-contents__link toc-highlight">3. 从深度到可遮挡伪几何</a><li><a href=#4-角色显示几何与着色法线解耦 class="table-of-contents__link toc-highlight">4. 角色：显示几何与着色法线解耦</a><ul><li><a href=#41-albedo class="table-of-contents__link toc-highlight">4.1 albedo</a><li><a href=#42-显示平面保持朝相机 class="table-of-contents__link toc-highlight">4.2 显示平面保持朝相机</a><li><a href=#43-可调主法线--隆起 class="table-of-contents__link toc-highlight">4.3 可调主法线 + 隆起</a></ul><li><a href=#5-ldr--hdr相对场景辐射不是绝对-nit class="table-of-contents__link toc-highlight">5. LDR → HDR：相对场景辐射，不是绝对 nit</a><li><a href=#6-渲染方程与-terminal-radiance class="table-of-contents__link toc-highlight">6. 渲染方程与 terminal radiance</a><li><a href=#7-nee-与唯一记账 class="table-of-contents__link toc-highlight">7. NEE 与唯一记账</a><li><a href=#8-缺失方向的分段补全 class="table-of-contents__link toc-highlight">8. 缺失方向的分段补全</a><li><a href=#9-reference-final-gather--探针缓存 class="table-of-contents__link toc-highlight">9. Reference final gather → 探针缓存</a><ul><li><a href=#91-l2-球谐 class="table-of-contents__link toc-highlight">9.1 L2 球谐</a><li><a href=#92-空间插值 class="table-of-contents__link toc-highlight">9.2 空间插值</a></ul><li><a href=#10-实验室管线离线 class="table-of-contents__link toc-highlight">10. 实验室管线（离线）</a><li><a href=#11-运行时-v2载荷与着色 class="table-of-contents__link toc-highlight">11. 运行时 v2：载荷与着色</a><ul><li><a href=#111-载荷位置与内容 class="table-of-contents__link toc-highlight">11.1 载荷位置与内容</a><li><a href=#112-着色式与实验室-char_fs-同式 class="table-of-contents__link toc-highlight">11.2 着色式（与实验室 CHAR_FS 同式）</a><li><a href=#113-与阴影--ao--深度遮挡的关系 class="table-of-contents__link toc-highlight">11.3 与阴影 / AO / 深度遮挡的关系</a></ul><li><a href=#12-内容工作流红线 class="table-of-contents__link toc-highlight">12. 内容工作流（红线）</a><li><a href=#13-必须过的验证 class="table-of-contents__link toc-highlight">13. 必须过的验证</a><ul><li><a href=#解析 class="table-of-contents__link toc-highlight">解析</a><li><a href=#项目场景 class="table-of-contents__link toc-highlight">项目场景</a></ul><li><a href=#14-表达能力上限 class="table-of-contents__link toc-highlight">14. 表达能力上限</a><li><a href=#15-最终理论链压缩 class="table-of-contents__link toc-highlight">15. 最终理论链（压缩）</a><li><a href=#相关 class="table-of-contents__link toc-highlight">相关</a></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class=footer__title>文档</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/GDoc/docs/tutorials/intro>教程</a><li class=footer__item><a class=footer__link-item href=/GDoc/docs/editors/overview>编辑器手册</a><li class=footer__item><a class=footer__link-item href=/GDoc/docs/dev/overview>开发文档</a><li class=footer__item><a class=footer__link-item href=/GDoc/docs/player/intro>玩家手册</a></ul></div><div class="theme-layout-footer-column col footer__col"><div class=footer__title>参考</div><ul class="footer__items clean-list"><li class=footer__item><a class=footer__link-item href=/GDoc/docs/editors/tool-matrix>工具速查表</a><li class=footer__item><a class=footer__link-item href=/GDoc/docs/reference/open-tools>工具打开方式</a><li class=footer__item><a class=footer__link-item href=/GDoc/docs/reference/glossary>术语表</a><li class=footer__item><a class=footer__link-item href=/GDoc/docs/reference/danger-zone>危险区</a></ul></div></div><div class="footer__bottom text--center"><div class=footer__copyright>Copyright © 2026 GameDraft. Built with Docusaurus.</div></div></div></footer></div></body>
