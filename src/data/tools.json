@@ -5,7 +5,7 @@
       "name": "主编辑器与生产工具",
       "slug": "主编辑器与生产工具",
       "tools": [
-        {"name": "主编辑器", "alias": "", "form": "桌面窗口", "launch": "./dev.sh editor", "readme": "yellow", "note": "30 块面板", "doc": "main-editor/overview"},
+        {"name": "主编辑器", "alias": "", "form": "桌面窗口", "launch": "./dev.sh editor", "readme": "green", "note": "31 块创作面板 + Game 预览", "doc": "main-editor/overview"},
         {"name": "生产工作台", "alias": "", "form": "桌面窗口(10 Tab)", "launch": "./dev.sh workbench", "readme": "yellow", "note": "剧情验收", "doc": "workbench/overview"},
         {"name": "Web 控制台", "alias": "", "form": "浏览器仪表盘", "launch": "./dev.sh console", "readme": "green", "note": "一键开工具", "doc": "concepts/web-console"}
       ]
@@ -25,7 +25,7 @@
       "name": "动画域",
       "slug": "动画域",
       "tools": [
-        {"name": "anim_preview", "alias": "动画预览", "form": "浏览器", "launch": "./dev.sh anim-preview", "readme": "green", "note": "端口 5199", "doc": "asset-domain/anim-preview"}
+        {"name": "anim_preview", "alias": "动画资源工作台", "form": "浏览器", "launch": "./dev.sh anim-preview", "readme": "green", "note": "版本阶段 + 装配终验", "doc": "asset-domain/anim-preview"}
       ]
     },
     {
@@ -48,7 +48,8 @@
       "name": "渲染域",
       "slug": "渲染域",
       "tools": [
-        {"name": "scene_depth_editor", "alias": "场景深度重建", "form": "桌面窗口", "launch": "主编辑器 → 外部工具", "readme": "green", "note": "", "doc": "render-domain/scene-depth-editor"},
+        {"name": "scene_depth_editor", "alias": "场景深度重建", "form": "桌面窗口", "launch": "主编辑器 → 外部工具", "readme": "green", "note": "遮挡/深度主体", "doc": "render-domain/scene-depth-editor"},
+        {"name": "character_lighting_lab", "alias": "角色照明实验室", "form": "浏览器", "launch": "./dev.sh char-lighting", "readme": "green", "note": "照明/探针/可导出深度", "doc": "render-domain/character-lighting-lab"},
         {"name": "lightvolume_lab", "alias": "光照体积烘焙", "form": "浏览器", "launch": "./dev.sh lightvol", "readme": "green", "note": "端口 8099", "doc": "render-domain/lightvolume-lab"},
         {"name": "parallax_editor", "alias": "视差场景编辑器", "form": "浏览器", "launch": "./dev.sh parallax-editor", "readme": "green", "note": "端口 5205", "doc": "render-domain/parallax-editor"},
         {"name": "filter_tool", "alias": "滤镜工具", "form": "桌面窗口", "launch": "./dev.sh filter-tool", "readme": "green", "note": "", "doc": "render-domain/filter-tool"}
@@ -70,10 +71,11 @@
       ]
     },
     {
-      "name": "治理台",
-      "slug": "治理台",
+      "name": "治理与协作",
+      "slug": "治理与协作",
       "tools": [
-        {"name": "skill_workflow_governance", "alias": "Skill/Workflow 治理台", "form": "命令行 + 仪表盘", "launch": "./dev.sh skill-governance", "readme": "green", "note": "", "doc": "services/skill-governance"}
+        {"name": "skill_workflow_governance", "alias": "Skill/Workflow 治理台", "form": "命令行 + 仪表盘", "launch": "./dev.sh skill-governance", "readme": "green", "note": "", "doc": "services/skill-governance"},
+        {"name": "agent_canvas_os", "alias": "Agent Canvas OS", "form": "浏览器画布", "launch": "./dev.sh agent-canvas-os", "readme": "yellow", "note": "独立子项目", "doc": ""}
       ]
     }
   ]

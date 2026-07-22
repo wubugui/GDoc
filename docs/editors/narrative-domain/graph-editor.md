@@ -114,7 +114,7 @@ flowchart TB
 | 工具 / 面板 | 关系 |
 |---|---|
 | [图对话编辑器](./dialogue-graph-editor) | 对话类内容的首选，通用图编辑器**不建议**再作为对话主战场 |
-| [主编辑器总览](../main-editor/overview) | 30 块专面板是日常主战场 |
+| [主编辑器总览](../main-editor/overview) | 31 块专面板是日常主战场 |
 | [叙事状态机](./narrative-editor-web) | 通用图编辑器**不包含**叙事状态机画布，那是完全独立的一块 |
 
 ---

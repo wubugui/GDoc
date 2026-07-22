@@ -36,15 +36,15 @@ flowchart LR
 
 ## 快速上手:走一遍完整闭环
 
-1. **同步**:`./dev.sh pull` ——这是上班第一件事,把 git 和 DVC 一起拉到最新。第一次拉全量媒体会比较慢,后续只拉增量。
+1. **同步**:`./dev.sh pull` ——这是上班第一件事,把 git 和运行时大文件一起拉到最新。第一次拉全量媒体会比较慢,后续只拉增量。若你还要动编辑器工程资源,用 `./dev.sh pull --editor`(或 `./scripts/pull-all.sh`)。
 2. **改文件**:用编辑器的入库工具(比如资源入库)把新素材放进对应目录,或者美术/音频直接改运行时目录里的文件。
-3. **提交**:`./dev.sh commit` ——把改动的媒体记进 DVC、指针和其它小改动一起进 Git。
+3. **提交**:`./dev.sh commit -m "说明"` ——把改动的媒体记进 DVC、指针和其它小改动一起进 Git(**必须带提交说明**)。
 4. **推送**:`./dev.sh push` ——把媒体推到 OSS、代码推到远程仓库。
 5. 通知协作者(或者他们自己下次 `pull` 时)就能拿到你改的素材。
 
-这三条命令都是"**all** 语义"——同时处理 Git 和 DVC,你不需要分开记 `dvc pull` 和 `git pull`,一条 `./dev.sh pull` 就够了。
+这几条命令都是"**Git + DVC** 语义"——你不需要分开记 `dvc pull` 和 `git pull`。注意:`./dev.sh pull` 默认拉运行时资源;`pull --editor` 才额外拉编辑器工程资源。
 
-雾津小例子:美术给关二狗新画了一版立绘,流程就是——先 `./dev.sh pull` 确保没有别人先改过这份立绘,把新图放进对应目录(或用入库工具切图命名),进游戏里看一眼效果对不对,然后 `./dev.sh commit` 提交、`./dev.sh push` 推送,其他人下次 `pull` 就能看到新立绘。
+雾津小例子:美术给关二狗新画了一版立绘,流程就是——先 `./dev.sh pull` 确保没有别人先改过这份立绘,把新图放进对应目录(或用入库工具切图命名),进游戏里看一眼效果对不对,然后 `./dev.sh commit -m "更新关二狗立绘"` 提交、`./dev.sh push` 推送,其他人下次 `pull` 就能看到新立绘。
 
 ---
 
@@ -68,12 +68,12 @@ flowchart LR
 2. 在仓库根目录执行:
 
 ```bash
-./dev.sh configure-oss --prefix gamedraft/dvc --endpoint https://oss-cn-hangzhou.aliyuncs.com
+./dev.sh configure-oss --bucket <你的桶名> --prefix gamedraft/dvc --endpoint https://oss-cn-hangzhou.aliyuncs.com
 ```
 
 3. 凭据会写在本地配置里,已经被 gitignore,**千万别把它提交进仓库**。
 
-远程 bucket 和 endpoint 以项目当前实际配置为准;换了台机器,要先 `configure-oss` 再 `pull`,不然拉不到东西。
+`--bucket` 必填;远程 bucket / endpoint / prefix 以项目当前实际配置为准。换了台机器,要先 `configure-oss` 再 `pull`,不然拉不到东西。
 
 ### 和 asset-ingest(资源入库)怎么分工
 
@@ -82,7 +82,7 @@ flowchart LR
 | **资源入库(asset-ingest)** | 外部素材的切片、命名、放进运行时目录树 |
 | **DVC** | 进目录之后的版本化、远程同步 |
 
-流程顺序是:**入库工具把素材落盘 → 进游戏里看一眼效果 → `./dev.sh commit` → `./dev.sh push`**。入库工具解决的是"这张图/这段音怎么变成游戏能用的格式、放在哪",DVC 解决的是"放好之后怎么让所有人同步到"。两者不是一回事,别把入库这一步跳过直接扔文件进目录。
+流程顺序是:**入库工具把素材落盘 → 进游戏里看一眼效果 → `./dev.sh commit -m "说明"` → `./dev.sh push`**。入库工具解决的是"这张图/这段音怎么变成游戏能用的格式、放在哪",DVC 解决的是"放好之后怎么让所有人同步到"。两者不是一回事,别把入库这一步跳过直接扔文件进目录。
 
 ### 协作守则
 

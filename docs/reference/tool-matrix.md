@@ -22,7 +22,7 @@ description: 参考区入口——完整工具一览在编辑器文档区。
 |---|---|
 | 怎么打开某个工具 | [工具打开方式](./open-tools) |
 | 两扇门从哪进 | `./dev.sh editor`（主编辑器）、`./dev.sh console`（Web 控制台） |
-| 每个面板管什么 | [主编辑器总览](../editors/main-editor/overview) |
+| 每个面板管什么 | [主编辑器总览](../editors/main-editor/overview)（31 块创作面板） |
 | Web 控制台按钮 | [Web 控制台](../editors/concepts/web-console) |
 
 ---
@@ -34,10 +34,10 @@ description: 参考区入口——完整工具一览在编辑器文档区。
 | 主编辑与生产 | 主编辑器、生产工作台、Web 控制台 |
 | 资产 | 资源浏览、入库、图片缩放、视频转图集 |
 | 图与叙事 | 图对话、通用图、叙事状态机 |
-| 渲染 | 场景深度、视差、滤镜、光照体积 |
+| 渲染 | 场景深度、角色照明实验室、视差、滤镜、光照体积 |
 | 文案 | 文案管理 |
 | 模拟 | 编年史模拟 |
 | 语言服务 | JSON 语言服务 |
-| 治理 | Skill/Workflow 治理台 |
+| 治理与协作 | Skill/Workflow 治理台、Agent Canvas OS |
 
 细节与启动命令以 **[工具速查表](../editors/tool-matrix)** 为准。

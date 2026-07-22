@@ -35,7 +35,7 @@
 
 | 分区 | 讲什么 |
 |---|---|
-| **[编辑器手册](https://wubugui.github.io/GDoc/docs/editors/overview)** | 主角。20+ 件编辑器/工具怎么用——主编辑器 30 块面板、生产工作台、各专项工具，以及做内容前必读的**危险区**。 |
+| **[编辑器手册](https://wubugui.github.io/GDoc/docs/editors/overview)** | 主角。20+ 件编辑器/工具怎么用——主编辑器 31 块创作面板、生产工作台、各专项工具，以及做内容前必读的**危险区**。 |
 | **[开发文档](https://wubugui.github.io/GDoc/docs/dev/architecture)** | 双壳结构、Godot 移植工作流、常用命令、资源管线。 |
 | **[教程](https://wubugui.github.io/GDoc/docs/tutorials/intro)** | 从零跑起来：起游戏、开编辑器、逛一圈主编辑器。 |
 | **[参考](https://wubugui.github.io/GDoc/docs/reference/authoring-surface)** | 逐面板的"能改什么 / 哪里会丢数据 / 哪里 GUI 够不着"。 |

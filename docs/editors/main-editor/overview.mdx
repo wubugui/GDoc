@@ -3,7 +3,7 @@ id: main-editor-overview
 title: 主编辑器总览
 sidebar_position: 1
 slug: /editors/main-editor/overview
-description: 内容编纂的主工作台——30 块面板、通用概念、边改边看。
+description: 内容编纂的主工作台——31 块创作面板、通用概念、边改边看。
 ---
 
 import PageBanner from '@site/src/components/PageBanner';
@@ -15,7 +15,7 @@ import PageBanner from '@site/src/components/PageBanner';
 
 # 主编辑器总览
 
-主编辑器是 GameDraft 的 **编纂主案**——一盏油灯、一方桌面窗口，雾津的场景、对白、任务、规矩、小游戏……几乎都在这里落笔。一个窗口里装着 **30 块编辑面板**，外加 **运行预览**；动作、条件、富文本这三件事贯穿所有面板。
+主编辑器是 GameDraft 的 **编纂主案**——一盏油灯、一方桌面窗口，雾津的场景、对白、任务、规矩、小游戏……几乎都在这里落笔。一个窗口里装着 **31 块创作面板**，外加 **运行预览（Game）**；动作、条件、富文本这三件事贯穿所有面板。
 
 启动：
 
@@ -85,7 +85,7 @@ import PageBanner from '@site/src/components/PageBanner';
   <text x="20" y="96" fill="#e0a44e" fontSize="13">① 菜单栏</text>
   <path d="M92,92 L166,92" stroke="#e0a44e" strokeWidth="1.5" markerEnd="url(#ed-ar)" fill="none" />
   <text x="14" y="250" fill="#e0a44e" fontSize="13">② 左侧导航</text>
-  <text x="24" y="268" fill="#ab9c7e" fontSize="11">30 块面板</text>
+  <text x="24" y="268" fill="#ab9c7e" fontSize="11">31 块面板</text>
   <path d="M96,254 L156,254" stroke="#e0a44e" strokeWidth="1.5" markerEnd="url(#ed-ar)" fill="none" />
   <text x="792" y="250" fill="#e0a44e" fontSize="13">③ 编辑区</text>
   <path d="M840,258 L748,258" stroke="#e0a44e" strokeWidth="1.5" markerEnd="url(#ed-ar)" fill="none" />
@@ -99,7 +99,7 @@ import PageBanner from '@site/src/components/PageBanner';
 | 区域 | 作用 |
 |---|---|
 | **① 菜单栏** | 文件（保存）、编辑（撤销）、视图、运行（预览）、工具（外部工具） |
-| **② 左侧导航树** | 30 块面板 + **运行与预览**，按五大组折叠。点哪块，右边显示哪块 |
+| **② 左侧导航树** | 31 块创作面板 + **运行与预览**，按组折叠。点哪块，右边显示哪块 |
 | **③ 右侧编辑区** | 当前面板的表单、画布、列表 |
 | **④ 运行 F5** | 保存后内嵌跑游戏，改完立刻验证 |
 | **⑤ 状态栏** | 保存状态、提示信息 |
@@ -108,15 +108,15 @@ import PageBanner from '@site/src/components/PageBanner';
 
 ---
 
-## 30 块面板（按组）
+## 31 块面板（按组）
 
-导航树里的数据面板共 **30 块**（不含运行预览的 Game 页）。点中文名进该面板的详细手册。
+导航树里的创作面板共 **31 块**（不含运行预览的 Game 页）。点中文名进该面板的详细手册。
 
 ### 物理世界
 
 | 面板 | 管什么 |
 |---|---|
-| **[场景](../panels/scene)** | 摆背景尺度、热区、NPC、区域、出生点 |
+| **[场景](../panels/scene)** | 摆背景尺度、热区、NPC、区域、出生点、光环境曲线 |
 | **[角色登记](../panels/character)** | 角色身份一处登记，场景里引用 |
 | **[地图](../panels/map)** | 大地图节点、场景转场与解锁 |
 
@@ -127,6 +127,7 @@ import PageBanner from '@site/src/components/PageBanner';
 | **[过场](../panels/cutscene)** | 时间轴式演出步骤 |
 | **[图对话](../panels/dialogue-graph)** | 节点图对白与分支 |
 | **[叙事状态机](../panels/narrative)** | 多线叙事状态与跳转 |
+| **[章节导演](../panels/narrative-packages)** | 哪些叙事包在场景里 live / dormant |
 | **[位面](../panels/plane)** | 位面规则、移动与交互 |
 | **[遭遇](../panels/encounter)** | 选项式遭遇与判定 |
 | **[临场长按](../panels/pressure-hold)** | 蓄力、中断与完成回调 |
@@ -135,7 +136,7 @@ import PageBanner from '@site/src/components/PageBanner';
 | **[转盘小游戏](../panels/sugar-wheel)** | 糖画转盘配置 |
 | **[扎纸小游戏](../panels/paper-craft)** | 扎纸订单与部件 |
 | **[剧本](../panels/scenarios)** | 剧本阶段与暴露内容 |
-| **[任务](../panels/quest)** | 任务链、分组与图形视图 |
+| **[任务](../panels/quest)** | 任务链、可重复活计、分组与图形视图 |
 
 ### 规则与经济
 
